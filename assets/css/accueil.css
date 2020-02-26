@@ -1,0 +1,99 @@
+/* Debut du corps de texte */
+/**/
+/* Actualités */
+#apiAuto
+{
+    overflow: scroll;
+    max-height: 120vh;
+    text-align:justify;
+}
+#apiAuto img
+{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: 100% 100%;
+}
+#apiAuto article
+{
+    font-size: 2vh;
+    color:#2E5C5B;
+    width: 100%;
+}
+#apiAuto a:hover
+{
+    color:#2E5C5B;
+    text-decoration: none;
+}
+/* Corps de texte */
+#prez
+{
+    text-align: center;
+    background-color: #111;
+    font-size: 1.2rem;
+    color: white;
+    
+}
+#prez p
+{
+    width: 50%;
+    margin-left: 25%;
+}
+
+#annonces
+{
+    background-color: white;
+    border: 1px solid black;
+}
+#actu
+{
+    background-color: white;
+    border: 1px solid black;
+}
+/**/
+/* Fin du corps de texte */
+
+@media  (max-width : 900px)
+{
+    #apiAuto article
+    {
+        margin-bottom: 60px;
+    }
+    #annonces
+    {
+        margin-bottom: 4%;
+    }
+    #carousel
+    {
+        margin-bottom: 4%;
+    }
+}
+@media  (min-width : 900px)
+{
+    #apiAuto
+    {
+        flex-wrap: wrap;
+    }
+    #apiAuto article
+    {
+        border: 1px solid black;
+    }
+    #apiAuto article hr
+    {
+        border-top: 1px solid black;
+        margin: -1px
+    }
+    #apiAuto img
+    {
+        max-height: 15vh;
+    }
+    #prez
+    {
+        width: 84.5vw;
+        margin-left: 6.5vw; 
+    }
+    #annonces
+    {
+        margin-right: 1%;
+    }
+}
