@@ -1,0 +1,9 @@
+# Le serveur doit suivre les liens symboliques :
+Options +FollowSymlinks
+
+# Activation du module de réécriture d'URL :
+RewriteEngine On
+
+RewriteRule ^adminer$ /adminer.php [L]
+
+RewriteRule ^([a-z0-9_]+)$ /index.php?action=$1 [L]
