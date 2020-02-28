@@ -1,0 +1,12 @@
+#user_panel{
+    height: auto;
+    margin-bottom: 20vh;
+}
+#user_panel div :hover {
+    background-color: #AB8449;
+}
+#user_panel div a {
+    text-decoration: none;
+    color: black;
+
+}

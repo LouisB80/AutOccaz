@@ -7,10 +7,10 @@ try {
         if (file_exists($url)) {
             require_once $url;
         } else {
-            die('erreur 404');
+            die('Erreur 404, cette page n\'existe pas');
         }
     } else {
-        die('erreur 404');
+        die('Erreur 404, cette page n\'existe pas');
     }
 } catch (Exception $e) {
     erreur($e->getMessage());

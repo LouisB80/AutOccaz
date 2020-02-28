@@ -40,7 +40,7 @@ if (isset($_POST['subscribe'])) {
         }
     } else {
         if ($_POST['passInscription'] === $_POST['passValidation']) {
-            $password = trim(password_hash($_POST['passInscription'], PASSWORD_DEFAULT));
+            $password = trim(password_hash($_POST['passInscription'], PASSWORD_BCRYPT));
         } else {
             $errors['password'] = 'Le mot de passe n\'est pas identique à la confirmation';
         }
