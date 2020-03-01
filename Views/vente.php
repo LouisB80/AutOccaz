@@ -10,7 +10,7 @@ $jsFile = 'vente.js';
     <!--Début du formulaire de vente--> 
     <div class="container-fluid" id="grad1">
         <div class="row justify-content-center mt-0">
-            <div class="col-11 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-3 mb-2">
+            <div class="col-12 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-3 mb-2">
                 <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
                     <div class="row">
                         <div class="col-md-12 mx-0">
@@ -79,7 +79,7 @@ $jsFile = 'vente.js';
                                         <input type="text" name="seat" placeholder="Nombre de places">
                                         <label for="doors">Nombre de portes:</label>
                                         <select name="doors" id="doors">
-                                            <option value="">--Sélectionner le nombre de portes--</option>
+                                            <option value="">--Nombre de portes--</option>
                                         </select>
                                     </div>
                                     <input type="button" name="previous" class="previous action-button-previous" value="Precedent" />
@@ -125,8 +125,8 @@ $jsFile = 'vente.js';
                                 <fieldset>
                                     <div class="form-card">
                                         <h2 class="fs-title text-center">Ajouter des photos</h2>
-                                        <label for="uploadImg">Veuillez inserer une image:</label>
-                                        <input type="file" name="uploadImg" id="uploadImg">                                        
+                                        <label for="uploadImg">Inserer une image:</label>
+                                        <input type="file" name="uploadImg" id="uploadImg">
                                     </div>
                                     <input type="button" name="previous" class="previous action-button-previous" value="Precedent" />
                                     <input type="button" name="next" class="next action-button" value="Suivant" />
@@ -153,6 +153,6 @@ $jsFile = 'vente.js';
         </div>
     </div>
 </div>
-<!--Fin du formulaire de vente--> 
+<!--Fin du formulaire de vente-->
 <?php
 $content = ob_get_clean();

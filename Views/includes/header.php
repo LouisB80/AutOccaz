@@ -24,46 +24,43 @@
                                 <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">S'inscrire</label>
                                 <div class="login-form">
                                     <form class="sign-in-htm" method="POST" action="">
-                                        <div class="group">
+                                        <div id="userConn" class="group">
                                             <label for="userConnection" class="label">Adresse Mail</label>
                                             <input id="userConnection" name="userConnection" type="text" class="input">
-                                            <span class="text-danger"></span>
                                         </div>
-                                        <div class="group">
+                                        <div id="userPass" class="group">
                                             <label for="passConnection" class="label">Mot de passe</label>
-                                            <input id="passConnection" name="passConnection" type="password" class="input" data-type="password">
-                                            <span class="text-danger"></span>
+                                            <input id="passConnection" name="passConnection" type="password" class="input" data-type="password">                                            
                                         </div>
                                         <div class="group">
-                                            <span class="text-danger"></span>
                                             <input type="submit" name="connection" class="button" value="Se connecter">
                                         </div>
                                         <div class="hr"></div>                                        
                                     </form>                                    
-                                    <form class="sign-up-htm" method="POST" novalidate action="">
-                                        <div class="group">
+                                    <form class="sign-up-htm" method="POST" action="">
+                                        <div id="lastNameInscr" class="group">
                                             <label for="lastNameInscription" class="label">Nom</label>
-                                            <input id="lastNameInscription" name="lastNameInscription" type="text" class="input">
+                                            <input id="lastNameInscription" name="lastNameInscription" type="text" class="input">                                            
                                         </div>
-                                        <div class="group">
+                                        <div id="firstNameInscr" class="group">
                                             <label for="firstNameInscription" class="label">Prenom</label>
-                                            <input id="firstNameInscription" name="firstNameInscription" type="text" class="input">
+                                            <input id="firstNameInscription" name="firstNameInscription" type="text" class="input">                                            
                                         </div>
-                                        <div class="group">
+                                        <div id="mailInscr" class="group">
                                             <label for="mailInscription" class="label">Adresse mail</label>
-                                            <input id="mailInscription" name="mailInscription" type="text" class="input">
+                                            <input id="mailInscription" name="mailInscription" type="text" class="input">                                            
                                         </div>
-                                        <div class="group">
+                                        <div id="passInscr" class="group">
                                             <label for="passInscription" class="label">Mot de passe</label>
-                                            <input id="passInscription" name="passInscription" type="password" class="input" data-type="password">
+                                            <input id="passInscription" name="passInscription" type="password" class="input" data-type="password">                                            
                                         </div>
-                                        <div class="group">
+                                        <div id="passValid" class="group">
                                             <label for="passValidation" class="label">Répeter le mot de passe</label>
-                                            <input id="passValidation" name="passValidation" type="password" class="input" data-type="password">
+                                            <input id="passValidation" name="passValidation" type="password" class="input" data-type="password">                                            
                                         </div>
-                                        <div class="group">
+                                        <div id="phoneNumb" class="group">
                                             <label for="phoneNumber" class="label">Téléphone</label>
-                                            <input id="phoneNumber" name="phoneNumber" type="text" class="input">
+                                            <input id="phoneNumber" name="phoneNumber" type="text" class="input">                                            
                                         </div>
                                         <div class="group">
                                             <input type="submit" name="subscribe" class="button" value="S'inscrire">

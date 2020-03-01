@@ -74,7 +74,7 @@ a{color:inherit;text-decoration:none}
     width:100%;
     height:90vh;
     position:absolute;
-    padding:90px 70px 50px 70px;
+    padding:10px 70px 50px 70px;
     background:rgba(40,57,101,.9);
 }
 .login-html .sign-in-htm,
@@ -286,6 +286,18 @@ a{color:inherit;text-decoration:none}
         text-decoration: none;
         padding-bottom: 5px;
     }
+    #connection .modal-body
+    {
+        height: 100vh;
+    }
+    .login-html
+    {
+        width:100%;
+        height:100vh;
+        position:absolute;
+        padding:10px 70px 50px 70px;
+        background:rgba(40,57,101,.9);
+    }
 }
 
 /* Media qurey section */
@@ -333,6 +345,7 @@ a{color:inherit;text-decoration:none}
     .nav div.media_button {
         display: block;
     }
+
 }
 .affix {
     padding: 0;
