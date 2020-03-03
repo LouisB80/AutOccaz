@@ -55,8 +55,8 @@ class Address extends DataBase{
         $req = 'SELECT zipCode, city, address, mainAddress FROM `Address` WHERE id_Users = :id_Users';
         $sth = $this->db->prepare($req);
         $sth->bindValue(':id_Users', $this->FK_idUsers, PDO::PARAM_INT);
-        if($sth->execute()) {            
-            $addressList = $sth->fetchAll(PDO::FETCH_ASSOC); 
+        if($sth instanceof PDOStatement) {            
+            $addressList = $sth->fetchAll(PDO::FETCH_OBJ); 
             return $addressList;
         }
         return die('Erreur lors de l\'éxécution de la requête, veuillez contacter l\'administrateur');     

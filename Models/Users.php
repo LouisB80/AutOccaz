@@ -79,8 +79,9 @@ class User extends DataBase {
         $users = [];
         $req = 'SELECT lastName, firstName, mail, password, phoneNumber, displayPhone FROM `Users`';
         $sth = $this->db->query($req);
-        if ($sth) {
-            $users = $sth->fetchAll(PDO::FETCH_ASSOC);
+        $sth->execute();
+        if ($sth instanceof PDOStatement) {
+            $users = $sth->fetchAll(PDO::FETCH_OBJ);
             return $users;
         }
         return die('Erreur lors de l\'éxécution de la requête, veuillez contacter l\'administrateur');
@@ -88,11 +89,12 @@ class User extends DataBase {
 
     public function getOneByMail($mail) {
         $user = [];
-        $req = 'SELECT lastName, firstName, password, phoneNumber, displayPhone FROM `Users` WHERE `Users`.mail = :mail';
+        $req = 'SELECT id, lastName, firstName, password, phoneNumber, displayPhone FROM `Users` WHERE `Users`.mail = :mail';
         $sth = $this->db->prepare($req);
         $sth->bindValue(':mail', $mail, PDO::PARAM_STR);
-        if ($sth->execute()) {
-            $user = $sth->fetch(PDO::FETCH_ASSOC);
+        $sth->execute();
+        if ($sth instanceof PDOStatement) {
+            $user = $sth->fetch(PDO::FETCH_OBJ);
             return $user;
         }
         return die('Erreur lors de l\'éxécution de la requête, veuillez contacter l\'administrateur');

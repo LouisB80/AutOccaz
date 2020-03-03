@@ -13,5 +13,5 @@ try {
         die('Erreur 404, cette page n\'existe pas');
     }
 } catch (Exception $e) {
-    erreur($e->getMessage());
+    exit($e->getMessage());
 }

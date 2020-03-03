@@ -86,7 +86,7 @@ class Cars extends DataBase {
     /**
      * @var type int 
      */
-    private $FK_idBrands;
+    private $FK_idModels;
 
     /**
      * @var type int 
@@ -108,7 +108,7 @@ class Cars extends DataBase {
      */
     private $FK_idUsers;
 
-    public function __construct($immat = '', $identifiedNumber = '', $year = '', $firstRegistration = '', $mileage = '', $color = '', $seat = '', $firstHand = '', $fiscalPower = '', $power = '', $leasing = false, $sell = true, $smoker = false, $view = '', $id_Brands = '', $id_Doors = '', $id_GearBox = '', $id_Fuels = '', $id_Users = '') {
+    public function __construct($immat = '', $identifiedNumber = '', $year = '', $firstRegistration = '', $mileage = '', $color = '', $seat = '', $firstHand = '', $fiscalPower = '', $power = '', $leasing = false, $sell = true, $smoker = false, $id_Models = '', $id_Doors = '', $id_GearBox = '', $id_Fuels = '', $id_Users = '', $view = '') {
         parent::__construct();
         $this->immat = $immat;
         $this->identifiedNumber = $identifiedNumber;
@@ -123,18 +123,19 @@ class Cars extends DataBase {
         $this->leasing = $leasing;
         $this->sell = $sell;
         $this->smoker = $smoker;
-        $this->view = $view;
-        $this->FK_idBrands = $id_Brands;
+        $this->FK_idModels = $id_Models;
         $this->FK_idDoors = $id_Doors;
         $this->FK_idGearBox = $id_GearBox;
         $this->FK_idFuels = $id_Fuels;
         $this->FK_idUsers = $id_Users;
+        $this->view = $view;
     }
 
     public function create() {
-        $req = 'INSERT INTO `Cars`(immat, year, firstRegistration, mileage, color, seat, firstHand, fiscalPower, power, leasing, sell, smoker, id_Brands, id_Doors, id_GearBox, id_Fuels, id_Users) VALUES(:immat, :year, :firstRegistration, :mileage, :color, :seat, :firstHand, :fiscalPower, :power, :leasing, :sell, :smoker, :id_Brands, :id_Doors, :id_GearBox, :id_Fuels, :id_Users)';
+        $req = 'INSERT INTO `Cars`(immat, identifiedNumber, year, firstRegistration, mileage, color, seat, firstHand, fiscalPower, power, leasing, sell, smoker, id_Models, id_Doors, id_GearBox, id_Fuels, id_Users, view) VALUES(:immat, :identifiedNumber, :year, :firstRegistration, :mileage, :color, :seat, :firstHand, :fiscalPower, :power, :leasing, :sell, :smoker, :id_Models, :id_Doors, :id_GearBox, :id_Fuels, :id_Users, :view)';
         $sth = $this->db->prepare($req);
         $sth->bindValue(':immat', $this->immat, PDO::PARAM_STR);
+        $sth->bindValue(':identifiedNumber', $this->identifiedNumber, PDO::PARAM_STR);
         $sth->bindValue(':year', $this->year, PDO::PARAM_STR);
         $sth->bindValue(':firstRegistration', $this->firstRegistration, PDO::PARAM_STR);
         $sth->bindValue(':mileage', $this->mileage, PDO::PARAM_INT);
@@ -146,20 +147,25 @@ class Cars extends DataBase {
         $sth->bindValue(':leasing', $this->leasing, PDO::PARAM_BOOL);
         $sth->bindValue(':sell', $this->sell, PDO::PARAM_BOOL);
         $sth->bindValue(':smoker', $this->smoker, PDO::PARAM_BOOL);
-        $sth->bindValue(':id_Brands', $this->id_Brands, PDO::PARAM_INT);
+        $sth->bindValue(':id_Models', $this->id_Models, PDO::PARAM_INT);
         $sth->bindValue(':id_Doors', $this->id_Doors, PDO::PARAM_INT);
         $sth->bindValue(':id_GearBox', $this->id_GearBox, PDO::PARAM_INT);
         $sth->bindValue(':id_Fuels', $this->id_Fuels, PDO::PARAM_INT);
         $sth->bindValue(':id_Users', $this->id_Users, PDO::PARAM_INT);
-        ($sth->execute()) ? true : die('Erreur lors de l\'éxécution de la requête, veuillez contacter l\'administrateur');
+        $sth->bindValue(':view', $this->view, PDO::PARAM_INT);
+        if($sth->execute()) {
+            return true;
+        } else {
+            return die('Erreur lors de l\'éxécution de la requête, veuillez contacter l\'administrateur');
+        }
     }
 
     public function getAll() {
         $carsList = [];
-        $req = 'SELECT immat, year, firstRegistration, mileage, color, seat, firstHand, fiscalPower, power, leasing, sell, smoker, id_Brands, id_Doors, id_GearBox, id_Fuels, id_Users FROM `Cars`';
+        $req = 'SELECT immat, year, firstRegistration, mileage, color, seat, firstHand, fiscalPower, power, leasing, sell, smoker, id_Models, id_Doors, id_GearBox, id_Fuels, id_Users FROM `Cars`';
         $sth = $this->db->query($req);
-        if ($sth) {
-            $carsList = $sth->fetchAll(PDO::FETCH_ASSOC);
+        if ($sth instanceof PDOStatement) {
+            $carsList = $sth->fetchAll(PDO::FETCH_OBJ);
             return $carsList;
         } else {
             return die('Erreur lors de l\'éxécution de la requête, veuillez contacter l\'administrateur');
@@ -168,11 +174,11 @@ class Cars extends DataBase {
 
     public function getOne() {
         $cars = [];
-        $req = 'SELECT immat, year, firstRegistration, mileage, color, seat, firstHand, fiscalPower, power, leasing, sell, smoker, id_Brands, id_Doors, id_GearBox, id_Fuels, id_Users FROM `Cars` WHERE `Cars`.id = :id';
+        $req = 'SELECT immat, year, firstRegistration, mileage, color, seat, firstHand, fiscalPower, power, leasing, sell, smoker, id_Models, id_Doors, id_GearBox, id_Fuels, id_Users FROM `Cars` WHERE `Cars`.id = :id';
         $sth = $this->db->query($req);
         $sth->bindValue(':id', $this->id, PDO::PARAM_INT);
-        if ($sth->execute()) {
-            $cars = $sth->fetch(PDO::FETCH_ASSOC);
+        if ($sth instanceof PDOStatement) {
+            $cars = $sth->fetch(PDO::FETCH_OBJ);
             return $cars;
         }
         return die('Erreur lors de l\'éxécution de la requête, veuillez contacter l\'administrateur');
@@ -180,11 +186,11 @@ class Cars extends DataBase {
     
     public function getPopulars() {
         $cars = [];
-        $req = 'SELECT color, brand, model, pictureName, source FROM `Cars` INNER JOIN `Brands` ON `Cars`.id_Brands = `Brands`.id INNER JOIN `Models` ON `Cars`.id_Brands = `Models`.id_Brands INNER JOIN `Pictures` ON `Cars`.id = `Pictures`.id_Cars ORDER BY view LIMIT 5';
+        $req = 'SELECT color, brand, model, pictureName, source FROM `Cars` INNER JOIN `Models` ON `Cars`.id_Models = `Models`.id INNER JOIN `Brands` ON `Models`.id_Brands = `Brands`.id INNER JOIN `Pictures` ON `Cars`.id = `Pictures`.id_Cars ORDER BY view LIMIT 5';
         $sth = $this->db->query($req);
         $sth->bindValue(':id', $this->id, PDO::PARAM_INT);
-        if ($sth->execute()) {
-            $cars = $sth->fetchAll(PDO::FETCH_ASSOC);
+        if ($sth instanceof PDOStatement) {
+            $cars = $sth->fetchAll(PDO::FETCH_OBJ);
             return $cars;
         }
         return die('Erreur lors de l\'éxécution de la requête, veuillez contacter l\'administrateur');
@@ -192,11 +198,11 @@ class Cars extends DataBase {
     
     public function getRecents() {
         $cars = [];
-        $req = 'SELECT color, brand, model, pictureName, source FROM `Cars` INNER JOIN `Brands` ON `Cars`.id_Brands = `Brands`.id INNER JOIN `Models` ON `Cars`.id_Brands = `Models`.id_Brands INNER JOIN `Pictures` ON `Cars`.id = `Pictures`.id_Cars ORDER BY `Cars`.id DESC LIMIT 10';
+        $req = 'SELECT color, brand, model, pictureName, source FROM `Cars` INNER JOIN `Models` ON `Cars`.id_Models = `Models`.id INNER JOIN `Brands` ON `Models`.id_Brands = `Brands`.id INNER JOIN `Pictures` ON `Cars`.id = `Pictures`.id_Cars ORDER BY `Cars`.id DESC LIMIT 10';
         $sth = $this->db->query($req);
         $sth->bindValue(':id', $this->id, PDO::PARAM_INT);
-        if ($sth->execute()) {
-            $cars = $sth->fetchAll(PDO::FETCH_ASSOC);
+        if ($sth instanceof PDOStatement) {
+            $cars = $sth->fetchAll(PDO::FETCH_OBJ);
             return $cars;
         }
         return die('Erreur lors de l\'éxécution de la requête, veuillez contacter l\'administrateur');
@@ -204,11 +210,11 @@ class Cars extends DataBase {
     
     public function getRentedCars() {
         $cars = [];
-        $req = 'SELECT color, brand, model, pictureName, source FROM `Cars` INNER JOIN `Brands` ON `Cars`.id_Brands = `Brands`.id INNER JOIN `Models` ON `Cars`.id_Brands = `Models`.id_Brands INNER JOIN `Pictures` ON `Cars`.id = `Pictures`.id_Cars WHERE `Cars`.leasing = 1';
+        $req = 'SELECT color, brand, model, pictureName, source FROM `Cars` INNER JOIN `Models` ON `Cars`.id_Models = `Models`.id INNER JOIN `Brands` ON `Models`.id_Brands = `Brands`.id INNER JOIN `Pictures` ON `Cars`.id = `Pictures`.id_Cars WHERE `Cars`.leasing = 1';
         $sth = $this->db->query($req);
         $sth->bindValue(':id', $this->id, PDO::PARAM_INT);
-        if ($sth->execute()) {
-            $cars = $sth->fetchAll(PDO::FETCH_ASSOC);
+        if ($sth instanceof PDOStatement) {
+            $cars = $sth->fetchAll(PDO::FETCH_OBJ);
             return $cars;
         }
         return die('Erreur lors de l\'éxécution de la requête, veuillez contacter l\'administrateur');
@@ -216,18 +222,18 @@ class Cars extends DataBase {
     
     public function getSellsCars() {
         $cars = [];
-        $req = 'SELECT color, brand, model, pictureName, source FROM `Cars` INNER JOIN `Brands` ON `Cars`.id_Brands = `Brands`.id INNER JOIN `Models` ON `Cars`.id_Brands = `Models`.id_Brands INNER JOIN `Pictures` ON `Cars`.id = `Pictures`.id_Cars WHERE `Cars`.sell = 1 ';
+        $req = 'SELECT color, brand, model, pictureName, source FROM `Cars` INNER JOIN `Models` ON `Cars`.id_Models = `Models`.id INNER JOIN `Brands` ON `Models`.id_Brands = `Brands`.id INNER JOIN `Pictures` ON `Cars`.id = `Pictures`.id_Cars WHERE `Cars`.sell = 1 ';
         $sth = $this->db->query($req);
         $sth->bindValue(':id', $this->id, PDO::PARAM_INT);
-        if ($sth->execute()) {
-            $cars = $sth->fetchAll(PDO::FETCH_ASSOC);
+        if ($sth instanceof PDOStatement) {
+            $cars = $sth->fetchAll(PDO::FETCH_OBJ);
             return $cars;
         }
         return die('Erreur lors de l\'éxécution de la requête, veuillez contacter l\'administrateur');
     }
 
     public function update() {
-        $req = 'UPDATE `Cars` SET immat = :immat, year = :year, firstRegistration = :firstRegistration, mileage = :mileage, color = :color, seat = :seat, firstHand = :firstHand, fiscalPower = :fiscalPower, power = :power, leasing = :leasing, sell = :sell, smoker = :smoker, id_Brands = :id_Brands, id_Doors = :id_Doors, id_GearBox = :id_GearBox, id_Fuels = :id_Fuels WHERE `Cars`.id = :id AND id_Users = :id_Users';
+        $req = 'UPDATE `Cars` SET immat = :immat, year = :year, firstRegistration = :firstRegistration, mileage = :mileage, color = :color, seat = :seat, firstHand = :firstHand, fiscalPower = :fiscalPower, power = :power, leasing = :leasing, sell = :sell, smoker = :smoker, id_Models = :id_Models, id_Doors = :id_Doors, id_GearBox = :id_GearBox, id_Fuels = :id_Fuels WHERE `Cars`.id = :id AND id_Users = :id_Users';
         $sth = $this->db->pepare($req);
         $sth->bindValue(':immat', $this->immat, PDO::PARAM_STR);
         $sth->bindValue(':year', $this->year, PDO::PARAM_STR);
@@ -241,7 +247,7 @@ class Cars extends DataBase {
         $sth->bindValue(':leasing', $this->leasing, PDO::PARAM_BOOL);
         $sth->bindValue(':sell', $this->sell, PDO::PARAM_BOOL);
         $sth->bindValue(':smoker', $this->smoker, PDO::PARAM_BOOL);
-        $sth->bindValue(':id_Brands', $this->FK_idBrands, PDO::PARAM_INT);
+        $sth->bindValue(':id_Models', $this->FK_idModels, PDO::PARAM_INT);
         $sth->bindValue(':id_Doors', $this->FK_idDoors, PDO::PARAM_INT);
         $sth->bindValue(':id_GearBox', $this->FK_idGearBox, PDO::PARAM_INT);
         $sth->bindValue(':id_Fuels', $this->FK_idFuels, PDO::PARAM_INT);

@@ -43,19 +43,21 @@ class Models extends DataBase {
     public function getAll() {
         $req = 'SELECT id, model, id_Brands FROM `Models`';
         $sth = $this->db->query($req);
-        if ($sth->fetchAll(PDO::FETCH_ASSOC)) {
-            return $sth;
+        if ($sth instanceof PDOStatement) {
+            $models = $sth->fetchAll(PDO::FETCH_OBJ);
+            return $models;
         }
         return die('Erreur lors de l\'éxécution de la requête, veuillez contacter l\'administrateur');
     }
 
-    public function getAllByBrand() {
+    public function getAllByBrand($idBrand) {
         $models = [];
         $req = 'SELECT id, model FROM `Models` WHERE `Models`.id_Brands = :id_Brands';
         $sth = $this->db->prepare($req);
-        $sth->bindValue(':id_Brands', $this->FK_idBrands);
-        if ($sth->execute()) {
-            $models = $sth->fetchAll(PDO::FETCH_ASSOC);
+        $sth->bindValue(':id_Brands', $idBrand);
+        $sth->execute();
+        if ($sth instanceof PDOStatement) {
+            $models = $sth->fetchAll(PDO::FETCH_OBJ);
             return $models;
         }
         return die('Erreur lors de l\'éxécution de la requête, veuillez contacter l\'administrateur');
@@ -65,8 +67,9 @@ class Models extends DataBase {
         $req = 'SELECT model, id_Brands FROM `Models` WHERE `Models`.id = :id';
         $sth = $this->db->prepare($req);
         $sth->bindValue(':id', $this->id, PDO::PARAM_INT);
-        if ($sth->execute()) {
-            $model = $sth->fetch(PDO::FETCH_ASSOC);
+        $sth->execute();
+        if ($sth instanceof PDOStatement) {
+            $model = $sth->fetch(PDO::FETCH_OBJ);
             return $model;
         }
         return die('Erreur lors de l\'éxécution de la requête, veuillez contacter l\'administrateur');

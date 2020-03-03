@@ -5,7 +5,7 @@
  *
  * @author lb
  */
-class Fuels {
+class Fuels extends DataBase{
 
     /**
      * @var type int
@@ -35,8 +35,9 @@ class Fuels {
     public function getAll() {
         $req = 'SELECT id, type FROM `Fuels`';
         $sth = $this->db->query($req);
-        if ($sth->fetchAll(PDO::FETCH_ASSOC)) {
-            return $sth;
+        if ($sth instanceof PDOStatement){
+            $fuels = $sth->fetchAll(PDO::FETCH_OBJ);
+            return $fuels;
         }
         return die('Erreur lors de l\'éxécution de la requête, veuillez contacter l\'administrateur');
     }
@@ -45,8 +46,8 @@ class Fuels {
         $req = 'SELECT type FROM `Fuels` WHERE id = :id';
         $sth = $this->db->prepare($req);
         $sth->bindValue(':id', $this->id, PDO::PARAM_INT);
-        if ($sth->execute()) {
-            $fuel = $sth->fetch(PDO::FETCH_ASSOC);
+        if ($sth instanceof PDOStatement) {
+            $fuel = $sth->fetch(PDO::FETCH_OBJ);
             return $fuel;
         }
         return die('Erreur lors de l\'éxécution de la requête, veuillez contacter l\'administrateur');

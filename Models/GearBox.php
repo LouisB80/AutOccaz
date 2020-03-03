@@ -5,7 +5,7 @@
  *
  * @author lb
  */
-class GearBox {
+class GearBox extends DataBase {
 
     /**
      * @var type int
@@ -35,8 +35,9 @@ class GearBox {
     public function getAll() {
         $req = 'SELECT id, type FROM `GearBox`';
         $sth = $this->db->query($req);
-        if ($sth->fetchAll(PDO::FETCH_ASSOC)) {
-            return $sth;
+        if ($sth instanceof PDOStatement) {
+            $gearBoxes = $sth->fetchAll(PDO::FETCH_OBJ);
+            return $gearBoxes;
         }
         return die('Erreur lors de l\'éxécution de la requête, veuillez contacter l\'administrateur');
     }
@@ -46,8 +47,8 @@ class GearBox {
         $req = 'SELECT type FROM `GearBox` WHERE id = :id';
         $sth = $this->db->prepare($req);
         $sth->bindValue(':id', $this->id, PDO::PARAM_INT);
-        if ($sth->execute()) {
-            $gearBox = $sth->fetch(PDO::FETCH_ASSOC);
+        if ($sth instanceof PDOStatement) {
+            $gearBox = $sth->fetch(PDO::FETCH_OBJ);
             return $gearBox;
         }
         return die('Erreur lors de l\'éxécution de la requête, veuillez contacter l\'administrateur');

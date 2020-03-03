@@ -3,61 +3,62 @@
 require_once 'Models/Users.php';
 //regex pour les contrôle du formulaire
 $regexName = "/^[A-Za-zéÉ][A-Za-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ]+((-| )[A-Za-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ]+)?$/";
+$regexPass = '/^(?=.[\d])(?=.[A-Z])(?=.[a-z])(?=.[!@#$%^&])?[\w!@#$%^&]{4,}$/';
 $regexTel = "/^0[2367]([0-9]{2}){4}$/";
 //contrôle du formulaire d'inscription après envoi
 if (isset($_POST['subscribe'])) {
-    //variables msg d'alerte champs mal saisis
+//variables msg d'alerte champs mal saisis
     $lastName = $firstName = $mail = $password = $passwordValidate = $phoneNumber = '';
-    //tableau d'erreurs
+//tableau d'erreurs
     $errors = [];
-    //contrôle du nom
+//contrôle du nom
     $lastName = trim(filter_input(INPUT_POST, 'lastNameInscription', FILTER_SANITIZE_STRING));
     if (empty($lastName)) {
         $errors['lastName'] = 'Veuillez renseigner le nom';
     } elseif (!preg_match($regexName, $lastName)) {
         $errors['lastName'] = 'Votre nom contient des caractères non autorisés !';
     }
-    //contrôle du prénom
+//contrôle du prénom
     $firstName = trim(filter_input(INPUT_POST, 'firstNameInscription', FILTER_SANITIZE_STRING));
     if (empty($firstName)) {
         $errors['firstName'] = 'Veuillez renseigner le prenom';
     } elseif (!preg_match($regexName, $firstName)) {
         $errors['firstName'] = 'Votre prenom contient des caractères non autorisés !';
     }
-    //contrôle de l'email
+//contrôle de l'email
     $mail = trim(htmlspecialchars($_POST['mailInscription']));
     if (empty($mail)) {
         $errors['mail'] = 'Veuillez renseigner votre email';
     } elseif (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
         $errors['mail'] = 'L\'email n\'est pas valide!';
     }
-    //contrôle du mot de passe
-    if (empty($_POST['passInscription'] || empty($_POST['passValidation']))) {
-        if (empty($_POST['passInscription'])) {
-            $errors['password'] = 'Veuillez renseigner le mot de passe';
-        } else {
-            $errors['password'] = 'Veuillez renseigner la confirmation du mot de passe';
-        }
-    } else {
-        if ($_POST['passInscription'] === $_POST['passValidation']) {
-            $password = trim(password_hash($_POST['passInscription'], PASSWORD_BCRYPT));
-        } else {
-            $errors['passwordIns'] = 'Le mot de passe n\'est pas identique à la confirmation';
-        }
+//contrôle du mot de passe
+    if (empty($_POST['passInscription']) || !preg_match($regexPass, $_POST['passInscription'])) {
+        $errors['password'] = 'Le mot de passe doit comporter au moins 4 caractères !';
     }
-    //contrôle du téléphone
+    if (empty($_POST['passValidation']) || !preg_match($regexPass, $_POST['passValidation'])) {
+        $errors['passwordIns'] = 'Veuillez renseigner la confirmation du mot de passe';
+    }
+    if ($_POST['passInscription'] != $_POST['passValidation']) {
+        $errors['passwordIns'] = 'Le mot de passe n\'est pas identique à la confirmation';
+    } else {
+        $password = trim(password_hash($_POST['passInscription'], PASSWORD_BCRYPT));
+    }
+//contrôle du téléphone
     $phoneNumber = trim(htmlspecialchars($_POST['phoneNumber']));
     if (empty($phoneNumber)) {
         $errors['phoneNumber'] = 'Veuillez renseigner votre téléphone';
     } elseif (!preg_match($regexTel, $phoneNumber)) {
         $errors['phoneNumber'] = 'Le format du téléphone n\'est pas valide!';
     }
-    //contrôle des erreurs
+//contrôle des erreurs
     if (count($errors) === 0) {
         $user = new User($lastName, $firstName, $password, $mail, $phoneNumber);
         $user->create();
+        $user->getOneByMail($mail);
         session_start();
         $_SESSION['user'] = $mail;
+        $_SESSION['id'] = $user->id;
     }
     exit(json_encode($errors));
 }
@@ -67,18 +68,19 @@ elseif (isset($_POST['connection'])) {
     $mail = trim(htmlspecialchars($_POST['userConnection']));
     $password = trim($_POST['passConnection']);
     $user = $user->getOneByMail($mail);
-    //tableau d'erreurs
+//tableau d'erreurs
     $errors = [];
     if (empty($mail)) {
         $errors['userConnection'] = 'Veuillez entrer votre email';
     }
     if (empty($password)) {
         $errors['passConnection'] = 'Veuillez entrer votre mot de passe';
-    } else if (!password_verify($password, $user['password'])) {
+    } else if (!password_verify($password, $user->password)) {
         $errors['passConnection'] = 'L\'addresse mail ou le mot de passe est invalide';
     } else {
         session_start();
-        $_SESSION['user'] = $mail;        
+        $_SESSION['user'] = $mail;
+        $_SESSION['id'] = $user->id;
     }
     exit(json_encode($errors));
 }

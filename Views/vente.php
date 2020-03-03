@@ -26,21 +26,23 @@ $jsFile = 'vente.js';
                                 <!-- Information sur le véhicule -->
                                 <fieldset>
                                     <div class="form-card">
-                                        <h2 class="text-center fs-title">Information sur le véhicule</h2>
-                                        <input type="text" name="immat" placeholder="Numéro d'immatriculation">
-                                        <input type="text" name="identifiedNumber" placeholder="3 derniers chiffres du numéro d'identification">
-                                        <label for="year">Année du véhicule:</label>
-                                        <input type="date" id="year" name="year" placeholder="Ex: 2020">
+                                        <h2 id="test" class="text-center fs-title">Information sur le véhicule</h2>
+                                        <input type="text" name="immat" id="immat" placeholder="Numéro d'immatriculation">
+                                        <input type="text" name="identifiedNumber" id="identifiedNumber" placeholder="3 derniers chiffres du numéro d'identification">
+                                        <input type="text" name="year" id="year" placeholder="Année du véhicule">
                                         <div>
                                             <label for="brand">Marque:</label>
                                             <select name="brand" id="brand">
                                                 <option value="">--Sélectionner une marque--</option>
+                                                <?php foreach ($listOfBrands as $brand) : ?>
+                                                    <option value="<?= $brand->id ?>"><?= $brand->brand ?></option>
+                                                <?php endforeach ?>
                                             </select>
                                         </div>
                                         <div>
                                             <label for="model">Modèle:</label>
                                             <select name="model" id="model">
-                                                <option value="">--Sélectionner un modèle--</option>
+                                                <option value="">--Sélectionner un modèle--</option>                                              
                                             </select>
                                         </div>
                                     </div>
@@ -50,21 +52,27 @@ $jsFile = 'vente.js';
                                 <fieldset>
                                     <div class="form-card">
                                         <h2 class="fs-title text-center">Motorisation</h2>
-                                        <input type="text" name="fiscalPower" placeholder="Puissance fiscale">
-                                        <input type="text" name="power" placeholder="Puissance dynamique">
-                                        <input type="mileage" name="mileage" placeholder="Kilomètrage">
+                                        <input type="text" name="fiscalPower" id="fiscalPower" placeholder="Puissance fiscale">
+                                        <input type="text" name="power" id="power" placeholder="Puissance dynamique">
+                                        <input type="mileage" name="mileage" id="mileage" placeholder="Kilomètrage">
                                         <label for="firstRegistration">Date de première mise en circulation:</label>
                                         <input type="date" id="firstRegistration" name="firstRegistration" placeholder="Ex: 01/01/2020">
                                         <div>
                                             <label for="gearBox">Boîte de vitesse:</label>
                                             <select name="gearBox" id="gearBox">
                                                 <option value="">--Boîte de vitesse--</option>
+                                                <?php foreach ($listOfGearBox as $gearBox) : ?>
+                                                    <option value="<?= $gearBox->id ?>"><?= $gearBox->type ?></option>
+                                                <?php endforeach ?> 
                                             </select>
                                         </div>
                                         <div>
                                             <label for="fuel">Carburant:</label>
                                             <select name="fuel" id="fuel">
                                                 <option value="">--Carburant--</option>
+                                                <?php foreach ($listOfFuels as $fuel) : ?>
+                                                    <option value="<?= $fuel->id ?>"><?= $fuel->type ?></option>
+                                                <?php endforeach ?> 
                                             </select>
                                         </div>
                                     </div>
@@ -75,11 +83,14 @@ $jsFile = 'vente.js';
                                 <fieldset>
                                     <div class="form-card">
                                         <h2 class="fs-title text-center">Configuration</h2>
-                                        <input type="text" name="color" placeholder="Couleur du véhicule">
-                                        <input type="text" name="seat" placeholder="Nombre de places">
+                                        <input type="text" name="color" id="color" placeholder="Couleur du véhicule">
+                                        <input type="text" name="seat" id="seat" placeholder="Nombre de places">
                                         <label for="doors">Nombre de portes:</label>
                                         <select name="doors" id="doors">
                                             <option value="">--Nombre de portes--</option>
+                                            <?php foreach ($listOfDoors as $door) : ?>
+                                                <option value="<?= $door->id ?>"><?= $door->number ?></option>
+                                            <?php endforeach ?> 
                                         </select>
                                     </div>
                                     <input type="button" name="previous" class="previous action-button-previous" value="Precedent" />
@@ -90,28 +101,28 @@ $jsFile = 'vente.js';
                                     <div class="form-card">
                                         <h2 class="fs-title text-center">Plus d'information</h2>
                                         <div>
-                                            <legend>Première main</legend>
+                                            <legend id="">Première main</legend>
                                             <input type="radio" id="firstHandYes" name="firstHand" value="1">
                                             <label for="firstHandYes">Oui</label>
                                             <input type="radio" id="firstHandNo" name="firstHand" value="0">
                                             <label for="firstHandNo">Non</label>
                                         </div>
                                         <div>
-                                            <legend>Louer</legend>                                    
+                                            <legend id="">Louer</legend>                                    
                                             <input type="radio" id="rentYes" name="rent" value="1">
                                             <label for="rentYes">Oui</label>
                                             <input type="radio" id="rentNo" name="rent" checked value="0">
                                             <label for="rentNo">Non</label>
                                         </div>
                                         <div>
-                                            <legend>Vendre</legend>
-                                            <input type="radio" id="sellYes" name="sell" value="1">
+                                            <legend id="">Vendre</legend>
+                                            <input type="radio" id="sellYes" name="sell" checked value="1">
                                             <label for="sellYes">Oui</label>
-                                            <input type="radio" id="sellNo" name="sell" checked value="0">
+                                            <input type="radio" id="sellNo" name="sell" value="0">
                                             <label for="sellNo">Non</label>
                                         </div>
                                         <div>
-                                            <legend>Fumeur:</legend>
+                                            <legend id="">Fumeur:</legend>
                                             <input type="radio" id="smokerYes" name="smoker" value="1">
                                             <label for="smokerYes">Oui</label>
                                             <input type="radio" id="smokerNo" name="smoker" checked value="0">
@@ -129,21 +140,7 @@ $jsFile = 'vente.js';
                                         <input type="file" name="uploadImg" id="uploadImg">
                                     </div>
                                     <input type="button" name="previous" class="previous action-button-previous" value="Precedent" />
-                                    <input type="button" name="next" class="next action-button" value="Suivant" />
-                                </fieldset>
-                                <!-- Étape finale -->
-                                <fieldset>
-                                    <div class="form-card">
-                                        <div class="row justify-content-center">
-                                            <div class="col-3"> <img src="https://img.icons8.com/color/96/000000/ok--v2.png" class="fit-image"> </div>
-                                        </div> <br><br>
-                                        <div class="row justify-content-center">
-                                            <div class="col-7 text-center">
-                                                <h5>Votre annonce a été mise en ligne avec succés</h5>
-                                            </div>
-                                        </div>
-                                        <input type="submit" name="submit" class="btn btn-success" value="Terminer" />
-                                    </div>
+                                    <input type="submit" name="submit" class="btn action-button" value="Terminer" />
                                 </fieldset>
                             </form>
                         </div>

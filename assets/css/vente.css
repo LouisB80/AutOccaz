@@ -236,3 +236,6 @@ select {
     background-color: white;
     color: #9E9E9E;
 }
+#model {
+    width: 70%;
+}

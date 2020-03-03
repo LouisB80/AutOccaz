@@ -5,7 +5,7 @@
  *
  * @author lb
  */
-class Doors {
+class Doors extends DataBase {
 
     /**
      * @var type int
@@ -35,8 +35,9 @@ class Doors {
     public function getAll() {
         $req = 'SELECT id, number FROM `Doors`';
         $sth = $this->db->query($req);
-        if ($sth->fetchAll(PDO::FETCH_ASSOC)) {
-            return $sth;
+        if ($sth instanceof PDOStatement) {
+            $allDoors = $sth->fetchAll(PDO::FETCH_OBJ);
+            return $allDoors;
         }
         return die('Erreur lors de l\'éxécution de la requête, veuillez contacter l\'administrateur');
     }
@@ -46,8 +47,8 @@ class Doors {
         $req = 'SELECT number FROM `Doors` WHERE id = :id';
         $sth = $this->db->prepare($req);
         $sth->bindValue(':id', $this->id, PDO::PARAM_INT);
-        if ($sth->execute()) {
-            $door = $sth->fetch(PDO::FETCH_ASSOC);
+        if ($sth instanceof PDOStatement) {
+            $door = $sth->fetch(PDO::FETCH_OBJ);
             return $door;
         }
         return die('Erreur lors de l\'éxécution de la requête, veuillez contacter l\'administrateur');

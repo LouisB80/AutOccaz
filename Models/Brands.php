@@ -29,8 +29,8 @@ class Brands extends DataBase{
         $req = 'SELECT id, brand FROM `Brands`';
         $sth = $this->db->query($req);        
         if($sth instanceof PDOStatement) {            
-            $brandList = $sth->fetch(PDO::FETCH_OBJ); 
-            return $$brandList;
+            $brandList = $sth->fetchAll(PDO::FETCH_OBJ); 
+            return $brandList;
         }
         return die('Erreur lors de l\'éxécution de la requête, veuillez contacter l\'administrateur');      
     }
@@ -39,8 +39,8 @@ class Brands extends DataBase{
         $req = 'SELECT brand FROM `Brands` WHERE `Brands`.id = :id ';
         $sth = $this->db->prepare($req);;
         $sth->bindValue(':id', $this->id, PDO::PARAM_INT);
-        if($sth->execute()) {
-            $brand = $sth->fetch(PDO::FETCH_ASSOC);
+        if($sth instanceof PDOStatement) {
+            $brand = $sth->fetch(PDO::FETCH_OBJ);
             return $brand;
         }
         return die('Erreur lors de l\'éxécution de la requête, veuillez contacter l\'administrateur');

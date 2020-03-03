@@ -5,7 +5,7 @@
  *
  * @author lb
  */
-class Pictures {
+class Pictures extends DataBase {
 
     /**
      * @var type int
@@ -51,8 +51,8 @@ class Pictures {
         $req = 'SELECT pictureName, source FROM `Pictures` WHERE `Pictures`.id_Cars = :id_Cars';
         $sth = $this->db->prepare($req);
         $sth->bindValue(':id_Cars', $this->FK_idCars, PDO::PARAM_INT);
-        if ($sth->execute()) {
-            $pictures = $sth->fetchAll(PDO::FETCH_ASSOC);
+        if ($sth instanceof PDOStatement) {
+            $pictures = $sth->fetchAll(PDO::FETCH_OBJ);
             return $pictures;
         }
         return false;
