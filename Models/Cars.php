@@ -147,11 +147,11 @@ class Cars extends DataBase {
         $sth->bindValue(':leasing', $this->leasing, PDO::PARAM_BOOL);
         $sth->bindValue(':sell', $this->sell, PDO::PARAM_BOOL);
         $sth->bindValue(':smoker', $this->smoker, PDO::PARAM_BOOL);
-        $sth->bindValue(':id_Models', $this->id_Models, PDO::PARAM_INT);
-        $sth->bindValue(':id_Doors', $this->id_Doors, PDO::PARAM_INT);
-        $sth->bindValue(':id_GearBox', $this->id_GearBox, PDO::PARAM_INT);
-        $sth->bindValue(':id_Fuels', $this->id_Fuels, PDO::PARAM_INT);
-        $sth->bindValue(':id_Users', $this->id_Users, PDO::PARAM_INT);
+        $sth->bindValue(':id_Models', $this->FK_idModels, PDO::PARAM_INT);
+        $sth->bindValue(':id_Doors', $this->FK_idDoors, PDO::PARAM_INT);
+        $sth->bindValue(':id_GearBox', $this->FK_idGearBox, PDO::PARAM_INT);
+        $sth->bindValue(':id_Fuels', $this->FK_idFuels, PDO::PARAM_INT);
+        $sth->bindValue(':id_Users', $this->FK_idUsers, PDO::PARAM_INT);
         $sth->bindValue(':view', $this->view, PDO::PARAM_INT);
         if($sth->execute()) {
             return true;

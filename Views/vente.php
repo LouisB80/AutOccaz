@@ -14,7 +14,7 @@ $jsFile = 'vente.js';
                 <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
                     <div class="row">
                         <div class="col-md-12 mx-0">
-                            <form id="msform" method="POST" action="user_cars">
+                            <form id="msform" method="POST" novalidate>
                                 <!-- barre de progression -->
                                 <ul id="progressbar">
                                     <li class="active" id="info">Information sur le véhicule</li>
@@ -140,7 +140,7 @@ $jsFile = 'vente.js';
                                         <input type="file" name="uploadImg" id="uploadImg">
                                     </div>
                                     <input type="button" name="previous" class="previous action-button-previous" value="Precedent" />
-                                    <input type="submit" name="submit" class="btn action-button" value="Terminer" />
+                                    <input type="submit" name="submit" class="btn action-button submit" value="Terminer" />
                                 </fieldset>
                             </form>
                         </div>

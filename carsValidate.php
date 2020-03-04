@@ -8,6 +8,7 @@ require_once 'Models/GearBox.php';
 require_once 'Models/Models.php';
 require_once 'Models/Pictures.php';
 require_once 'Models/Users.php';
+session_start();
 
 //regex
 $regexImmat = '/^([A-Z|a-z]{2}|[0-9]{2,4})+(\-|)+([0-9]{3}|[A-Z|a-z]{2,3})+(\-|)+([A-Z|a-z]{2}|[0-9]{2}|2[A-B|a-b])$/';
@@ -18,7 +19,7 @@ $regexDate = '/^((?:19|20)[0-9]{2})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/';
 if (isset($_POST['subscribe'])) {
     //Tableau d'erreur
     $errors = [];
-
+    $var = [];
     if ($_POST['step'] == 0) {
         $immat = $identifiedNumber = $year = $brands = $models = '';
         //contrôle de l'immatriculation
@@ -56,7 +57,11 @@ if (isset($_POST['subscribe'])) {
         } elseif (!filter_var($models, FILTER_VALIDATE_INT)) {
             $errors['model'] = 'Ce champ est incorrect';
         }
-        echo json_encode($errors);
+        if (count($errors) === 0) {
+            array_push($var, $immat, $identifiedNumber, $year, $brands, $models);
+        }
+        $tab = array('error' => $errors, 'validValue' => $var);
+        exit(json_encode($tab));
     } elseif ($_POST['step'] == 1) {
         $fiscalPower = $power = $mileage = $firstRegistration = $gearBox = $fuels = '';
         //contrôle de la puissance fiscale
@@ -101,7 +106,11 @@ if (isset($_POST['subscribe'])) {
         } elseif (!filter_var($fuels, FILTER_VALIDATE_INT)) {
             $errors['fuel'] = 'Ce champ est incorrect';
         }
-        echo json_encode($errors);
+        if (count($errors) === 0) {
+            array_push($var, $fiscalPower, $power, $mileage, $firstRegistration, $gearBox, $fuels);
+        }
+        $tab = array('error' => $errors, 'validValue' => $var);
+        exit(json_encode($tab));
     } elseif ($_POST['step'] == 2) {
         $color = $seat = $doors = '';
         //contrôle de la couleur
@@ -123,7 +132,11 @@ if (isset($_POST['subscribe'])) {
         } elseif (!filter_var($doors, FILTER_VALIDATE_INT)) {
             $errors['doors'] = 'Ce champ est incorrect';
         }
-        echo json_encode($errors);
+        if (count($errors) === 0) {
+            array_push($var, $color, $seat, $doors);
+        }
+        $tab = array('error' => $errors, 'validValue' => $var);
+        exit(json_encode($tab));
     } elseif ($_POST['step'] == 3) {
         $firstHand = $leasing = $sell = $smoker = '';
         //contrôle si premère main
@@ -146,21 +159,23 @@ if (isset($_POST['subscribe'])) {
         if (!isset($smoker)) {
             $errors['smoker'] = 'Veuillez renseigner ce champ';
         }
-        echo json_encode($errors);
+        if (count($errors) === 0) {
+            array_push($var, $firstHand, $leasing, $sell, $smoker);
+        }
+        $tab = array('error' => $errors, 'validValue' => $var);
+        exit(json_encode($tab));
     } elseif ($_POST['step'] == 4) {
-        $pictures = '';
+//        $pictures = '';
         //contrôle des photos
-        $pictures = trim(filter_input(INPUT_POST, 'uploadImg', FILTER_SANITIZE_STRING));
+//        $pictures = trim(filter_input(INPUT_POST, 'uploadImg', FILTER_SANITIZE_STRING));
 //        if (empty($pictures)) {
 //            $errors['uploadImg'] = 'Veuillez insérer une photo du véhicule';
 //        } elseif (!filter_var($pictures, FILTER_VALIDATE_INT)) {
 //            $errors['uploadImg'] = 'Ce champ est incorrect';
 //        }
-        echo json_encode($errors);
     }
-    //contrôle des erreurs
-    if (count($errors) === 0 && $_POST['step'] == 4 && $_POST['submit']) {
-        $car = new Cars($immat, $identifiedNumber, $year, $firstRegistration, $mileage, $color, $seat, $firstHand, $fiscalPower, $power, $leasing, $sell, $smoker, $id_Models, $id_Doors, $id_GearBox, $id_Fuels, $_SESSION['id']);
-        $car->create();
-    }
+} elseif (isset($_POST['submit'])) {
+    $car = new Cars($_POST['immat'], $_POST['identifiedNumber'], $_POST['year'], $_POST['firstRegistration'], $_POST['mileage'], $_POST['color'], $_POST['seat'], $_POST['firstHand'], $_POST['fiscalPower'], $_POST['power'], $_POST['rent'], $_POST['sell'], $_POST['smoker'], $_POST['model'], $_POST['doors'], $_POST['gearBox'], $_POST['fuel'], $_SESSION['id']);
+    $response = $car->create();
+    echo json_encode($response);
 }

@@ -4,6 +4,8 @@ $(document).ready(function () {
     var opacity;
     var clickedBrand = '';
     var step = 0;
+    var tabValue = [];
+    //Select marque
     $('#brand').change(function () {
         clickedBrand = 'idBrand=' + $(this).val();
         console.log(clickedBrand);
@@ -22,7 +24,9 @@ $(document).ready(function () {
         });
     })
 
-    $(".next").click(function () {
+    //Bouton suivant
+    $(".next").click(function (e) {
+        e.preventDefault();
         current_fs = $(this).parent();
         next_fs = $(this).parent().next();
         let dataValue = $(this).parent('fieldset').serialize() + '&step=' + step + '&subscribe=true';
@@ -33,10 +37,15 @@ $(document).ready(function () {
             data: dataValue,
             datatype: 'json',
             success: function (response) {
+                console.log(response);
                 var data = JSON.parse(response);
                 console.log(data);
-                if (data.length == 0) {
+                if (data.error.length === 0) {
                     step++;
+                    $.map(data.validValue, function (value) {
+                        tabValue.push(value);
+                    })
+                    console.log(tabValue);
                     //Add Class Active
                     $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
                     //show the next fieldset
@@ -54,6 +63,7 @@ $(document).ready(function () {
                         },
                         duration: 600
                     });
+                    return false;
                 } else {
                     $('span').empty();
                     (data['immat']) ? $('#immat').after('<span class="text-danger">' + data['immat'] + '</span>') : false;
@@ -80,6 +90,22 @@ $(document).ready(function () {
         })
     });
 
+    //Bouton d'envoi
+    $('.submit').click(function (e) {
+        e.preventDefault();
+        let dataValue = 'immat=' + tabValue[0] + '&identifiedNumber=' + tabValue[1] +'&year=' + tabValue[2] +'&brand' + tabValue[3] +'&model=' + tabValue[4] +'&fiscalPower=' + tabValue[5] +'&power=' + tabValue[6] +'&mileage=' + tabValue[7] +'&firstRegistration=' + tabValue[8] +'&gearBox=' + tabValue[9] +'&fuel=' + tabValue[10] +'&color=' + tabValue[11] +'&seat=' + tabValue[12] +'&doors=' + tabValue[13] +'&firstHand=' + tabValue[14] +'&rent=' + tabValue[15] +'&sell=' + tabValue[16] +'&smoker=' + tabValue[17] + '&submit=true';
+        $.ajax({
+            method: 'POST',
+            url: 'carsValidate.php',
+            data: dataValue,
+            datatype: 'json',
+            success: function(response) {
+                   console.log(JSON.parse(response));             
+            }
+        });
+    });
+
+    //Bouton precedent
     $(".previous").click(function () {
         step--;
         current_fs = $(this).parent();
@@ -102,6 +128,8 @@ $(document).ready(function () {
             duration: 600
         });
     });
+
+    //Bouton radio
     $('.radio-group .radio').click(function () {
         $(this).parent().find('.radio').removeClass('selected');
         $(this).addClass('selected');
