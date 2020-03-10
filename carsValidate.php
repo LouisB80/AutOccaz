@@ -159,23 +159,21 @@ if (isset($_POST['subscribe'])) {
         if (!isset($smoker)) {
             $errors['smoker'] = 'Veuillez renseigner ce champ';
         }
+        //contrôle du prix de vente
+        $price = trim(filter_input(INPUT_POST, 'price', FILTER_SANITIZE_NUMBER_FLOAT));
+        if (empty($price)) {
+            $errors['price'] = 'Veuillez renseigner ce champ';
+        } elseif (!filter_var($price, FILTER_VALIDATE_FLOAT)) {
+            $errors['price'] = 'Ce champ est incorrect, merci de renseigner un prix';
+        }
         if (count($errors) === 0) {
             array_push($var, $firstHand, $leasing, $sell, $smoker);
         }
         $tab = array('error' => $errors, 'validValue' => $var);
         exit(json_encode($tab));
-    } elseif ($_POST['step'] == 4) {
-//        $pictures = '';
-        //contrôle des photos
-//        $pictures = trim(filter_input(INPUT_POST, 'uploadImg', FILTER_SANITIZE_STRING));
-//        if (empty($pictures)) {
-//            $errors['uploadImg'] = 'Veuillez insérer une photo du véhicule';
-//        } elseif (!filter_var($pictures, FILTER_VALIDATE_INT)) {
-//            $errors['uploadImg'] = 'Ce champ est incorrect';
-//        }
     }
 } elseif (isset($_POST['submit'])) {
-    $car = new Cars($_POST['immat'], $_POST['identifiedNumber'], $_POST['year'], $_POST['firstRegistration'], $_POST['mileage'], $_POST['color'], $_POST['seat'], $_POST['firstHand'], $_POST['fiscalPower'], $_POST['power'], $_POST['rent'], $_POST['sell'], $_POST['smoker'], $_POST['model'], $_POST['doors'], $_POST['gearBox'], $_POST['fuel'], $_SESSION['id']);
+    $car = new Cars($_POST['immat'], $_POST['identifiedNumber'], $_POST['year'], $_POST['firstRegistration'], $_POST['mileage'], $_POST['color'], $_POST['seat'], $_POST['firstHand'], $_POST['fiscalPower'], $_POST['power'], $_POST['rent'], $_POST['sell'], $_POST['smoker'], $_POST['model'], $_POST['doors'], $_POST['gearBox'], $_POST['fuel'], $_SESSION['id'], $_POST['price']);
     $response = $car->create();
     echo json_encode($response);
 }

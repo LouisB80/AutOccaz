@@ -48,7 +48,12 @@ class User extends DataBase {
      */
     private $displayPhone;
 
-    public function __construct($lastName = '', $firstName = '', $password = '', $mail = '', $phoneNumber = '', $disabled = false, $displayPhone = false) {
+    /**
+     * @var type int
+     */
+    private $id_Permissions;
+
+    public function __construct($lastName = '', $firstName = '', $password = '', $mail = '', $phoneNumber = '', $id_Permissions = 2, $disabled = false, $displayPhone = false) {
         parent::__construct();
         $this->lastName = $lastName;
         $this->firstName = $firstName;
@@ -57,10 +62,11 @@ class User extends DataBase {
         $this->phoneNumber = $phoneNumber;
         $this->disabled = $disabled;
         $this->displayPhone = $displayPhone;
+        $this->id_Permissions = $id_Permissions;
     }
 
     public function create() {
-        $req = 'INSERT INTO `Users`(lastName, firstName, mail, password, phoneNumber, disabled, displayPhone) VALUES(:lastName, :firstName, :mail, :password, :phoneNumber, :disabled, :displayPhone)';
+        $req = 'INSERT INTO `Users`(lastName, firstName, mail, password, phoneNumber, disabled, displayPhone, id_Permissions) VALUES(:lastName, :firstName, :mail, :password, :phoneNumber, :disabled, :displayPhone, :id_Permissions)';
         $sth = $this->db->prepare($req);
         $sth->bindValue(':lastName', $this->lastName, PDO::PARAM_STR);
         $sth->bindValue(':firstName', $this->firstName, PDO::PARAM_STR);
@@ -69,6 +75,7 @@ class User extends DataBase {
         $sth->bindValue(':phoneNumber', $this->phoneNumber, PDO::PARAM_STR);
         $sth->bindValue(':disabled', $this->disabled, PDO::PARAM_BOOL);
         $sth->bindValue(':displayPhone', $this->displayPhone, PDO::PARAM_BOOL);
+        $sth->bindValue(':id_Permissions', $this->id_Permissions, PDO::PARAM_INT);
         if ($sth->execute()) {
             return true;
         }
@@ -77,7 +84,7 @@ class User extends DataBase {
 
     public function getAll() {
         $users = [];
-        $req = 'SELECT lastName, firstName, mail, password, phoneNumber, displayPhone FROM `Users`';
+        $req = 'SELECT lastName, firstName, mail, password, phoneNumber, displayPhone, id_Permissions FROM `Users`';
         $sth = $this->db->query($req);
         $sth->execute();
         if ($sth instanceof PDOStatement) {
@@ -89,7 +96,7 @@ class User extends DataBase {
 
     public function getOneByMail($mail) {
         $user = [];
-        $req = 'SELECT id, lastName, firstName, password, phoneNumber, displayPhone FROM `Users` WHERE `Users`.mail = :mail';
+        $req = 'SELECT id, lastName, firstName, password, phoneNumber, displayPhone, id_Permissions FROM `Users` WHERE `Users`.mail = :mail';
         $sth = $this->db->prepare($req);
         $sth->bindValue(':mail', $mail, PDO::PARAM_STR);
         $sth->execute();
@@ -101,7 +108,7 @@ class User extends DataBase {
     }
 
     public function update() {
-        $req = 'UPDATE `Users` SET lastName = :lastName, firstName = :firstName, mail = :mail, password = :password, phoneNumber = :phoneNumber, disabled = :disabled, displayPhone = :displayPhone';
+        $req = 'UPDATE `Users` SET lastName = :lastName, firstName = :firstName, mail = :mail, password = :password, phoneNumber = :phoneNumber, disabled = :disabled, displayPhone = :displayPhone, id_Permissions = :id_Permissions';
         $sth = $this->db->prepare($req);
         $sth->bindValue(':lastName', $this->lastName, PDO::PARAM_STR);
         $sth->bindValue(':firstName', $this->firstName, PDO::PARAM_STR);
@@ -110,6 +117,7 @@ class User extends DataBase {
         $sth->bindValue(':phoneNumber', $this->phoneNumber, PDO::PARAM_STR);
         $sth->bindValue(':disabled', $this->disabled, PDO::PARAM_BOOL);
         $sth->bindValue(':displayPhone', $this->displayPhone, PDO::PARAM_BOOL);
+        $sth->bindValue(':id_Permissions', $this->id_Permissions, PDO::PARAM_INT);
         if ($sth->execute()) {
             return true;
         }

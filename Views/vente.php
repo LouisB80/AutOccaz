@@ -10,17 +10,17 @@ $jsFile = 'vente.js';
     <!--Début du formulaire de vente--> 
     <div class="container-fluid" id="grad1">
         <div class="row justify-content-center mt-0">
-            <div class="col-12 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-3 mb-2">
+            <div class="col-12 col-sm-9 col-md-7 col-lg-6 text-center mb-5 mt-3 mb-2 shadow ">
                 <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
                     <div class="row">
                         <div class="col-md-12 mx-0">
-                            <form id="msform" method="POST" novalidate>
+                            <form id="msform" method="POST" novalidate action="/user_cars" enctype="multipart/form-data">
                                 <!-- barre de progression -->
                                 <ul id="progressbar">
-                                    <li class="active" id="info">Information sur le véhicule</li>
+                                    <li class="active" id="info">Informations sur le véhicule</li>
                                     <li id="engine">Motorisation</li>
                                     <li id="config">Configuration</li>
-                                    <li id="moreInfo">Plus d'information</li>
+                                    <li id="moreInfo">Plus d'informations</li>
                                     <li id="pictures">Ajouter des photos</li>
                                 </ul>
                                 <!-- Information sur le véhicule -->
@@ -128,18 +128,19 @@ $jsFile = 'vente.js';
                                             <input type="radio" id="smokerNo" name="smoker" checked value="0">
                                             <label for="smokerNo">Non</label>
                                         </div>
+                                        <input type="text" name="price" id="price" placeholder="Entrer un prix">
                                     </div>
                                     <input type="button" name="previous" class="previous action-button-previous" value="Precedent" />
-                                    <input type="button" name="next" class="next action-button" value="Suivant" />
+                                    <input type="button" name="next" class="next action-button" id="send" value="Suivant" />
                                 </fieldset>
-                                <!-- Ajouter des photos -->
                                 <fieldset>
                                     <div class="form-card">
-                                        <h2 class="fs-title text-center">Ajouter des photos</h2>
-                                        <label for="uploadImg">Inserer une image:</label>
-                                        <input type="file" name="uploadImg" id="uploadImg">
+                                        <h2 class="fs-title text-center" id="viewInfo">Votre annonce a été enregistrée avec succés.</h2>
+                                        <p>Si vous souhaitez, vous pouvez ajouter des photos ci-dessous</p>
+                                        <input type="hidden" id="hiddenInput">
+                                        <input type="file" name="picture" id="fileUpload">
                                     </div>
-                                    <input type="button" name="previous" class="previous action-button-previous" value="Precedent" />
+                                    <input type="button" name="upload" class="btn btn-success" id="upload" value="Ajoute une photo" />
                                     <input type="submit" name="submit" class="btn action-button submit" value="Terminer" />
                                 </fieldset>
                             </form>

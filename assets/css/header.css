@@ -4,7 +4,7 @@ body
     padding: 0;
     box-sizing: border-box;
     font-family: "Quicksand", sans-serif;
-    background-color: #bf7e6b;
+    background-color: #F7F3F1;
 }
 h2
 {
@@ -247,7 +247,7 @@ a{color:inherit;text-decoration:none}
     -webkit-text-stroke: 1px #AB8449;
 }
 .nav div.main_list ul li a:hover {
-    color: #00E676;
+    color: #F7F3F1;
 }
 .sizeNav {
     font-size: 62.5%

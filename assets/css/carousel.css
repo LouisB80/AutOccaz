@@ -6,6 +6,14 @@
     /* Magic! */
     max-width: 50vw;
 }
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    height: 4vh;
+    width: 2vw;
+    outline: black;
+    background-color: rgba(0, 0, 0, 0.3);
+    background-size: 100%, 100%;
+    border: 1px solid black;
+}
 .sizeImg
 {
     height: 70vh;
@@ -23,4 +31,8 @@
         width: 100%;
         height: 100%;
     }
+    .carousel-control-prev-icon, .carousel-control-next-icon {
+    height: 4vh;
+    width: 5vw;
+}
 }

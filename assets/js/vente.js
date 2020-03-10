@@ -30,7 +30,7 @@ $(document).ready(function () {
         current_fs = $(this).parent();
         next_fs = $(this).parent().next();
         let dataValue = $(this).parent('fieldset').serialize() + '&step=' + step + '&subscribe=true';
-        console.log(dataValue)
+        console.log(dataValue);
         $.ajax({
             method: 'POST',
             url: 'carsValidate.php',
@@ -66,45 +66,69 @@ $(document).ready(function () {
                     return false;
                 } else {
                     $('span').empty();
-                    (data['immat']) ? $('#immat').after('<span class="text-danger">' + data['immat'] + '</span>') : false;
-                    (data['identifiedNumber']) ? $('#identifiedNumber').after('<span class="text-danger">' + data['identifiedNumber'] + '</span>') : false;
-                    (data['year']) ? $('#year').after('<span class="text-danger">' + data['year'] + '</span>') : false;
-                    (data['brand']) ? $('#brand').parent('div').after('<span class="text-danger">' + data['brand'] + '</span>') : false;
-                    (data['model']) ? $('#model').parent('div').after('<span class="text-danger">' + data['model'] + '</span>') : false;
-                    (data['fiscalPower']) ? $('#fiscalPower').after('<span class="text-danger">' + data['fiscalPower'] + '</span>') : false;
-                    (data['power']) ? $('#power').after('<span class="text-danger">' + data['power'] + '</span>') : false;
-                    (data['mileage']) ? $('#mileage').after('<span class="text-danger">' + data['mileage'] + '</span>') : false;
-                    (data['firstRegistration']) ? $('#firstRegistration').after('<span class="text-danger">' + data['firstRegistration'] + '</span>') : false;
-                    (data['gearBox']) ? $('#gearBox').after('<span class="text-danger">' + data['gearBox'] + '</span>') : false;
-                    (data['fuel']) ? $('#fuel').after('<span class="text-danger">' + data['fuel'] + '</span>') : false;
-                    (data['color']) ? $('#color').after('<span class="text-danger">' + data['color'] + '</span>') : false;
-                    (data['seat']) ? $('#seat').after('<span class="text-danger">' + data['seat'] + '</span>') : false;
-                    (data['doors']) ? $('#doors').after('<span class="text-danger">' + data['doors'] + '</span>') : false;
-                    (data['firstHand']) ? $('#firstHand').after('<span class="text-danger">' + data['firstHand'] + '</span>') : false;
-                    (data['rent']) ? $('#rent').after('<span class="text-danger">' + data['rent'] + '</span>') : false;
-                    (data['sell']) ? $('#sell').after('<span class="text-danger">' + data['sell'] + '</span>') : false;
-                    (data['smoker']) ? $('#smoker').after('<span class="text-danger">' + data['smoker'] + '</span>') : false;
-                    (data['uploadImg']) ? $('#uploadImg').after('<span class="text-danger">' + data['uploadImg'] + '</span>') : false;
+                    (data.error['immat']) ? $('#immat').after('<span class="text-danger">' + data.error['immat'] + '</span>') : false;
+                    (data.error['identifiedNumber']) ? $('#identifiedNumber').after('<span class="text-danger">' + data.error['identifiedNumber'] + '</span>') : false;
+                    (data.error['year']) ? $('#year').after('<span class="text-danger">' + data.error['year'] + '</span>') : false;
+                    (data.error['brand']) ? $('#brand').parent('div').after('<span class="text-danger">' + data.error['brand'] + '</span>') : false;
+                    (data.error['model']) ? $('#model').parent('div').after('<span class="text-danger">' + data.error['model'] + '</span>') : false;
+                    (data.error['fiscalPower']) ? $('#fiscalPower').after('<span class="text-danger">' + data.error['fiscalPower'] + '</span>') : false;
+                    (data.error['power']) ? $('#power').after('<span class="text-danger">' + data.error['power'] + '</span>') : false;
+                    (data.error['mileage']) ? $('#mileage').after('<span class="text-danger">' + data.error['mileage'] + '</span>') : false;
+                    (data.error['firstRegistration']) ? $('#firstRegistration').after('<span class="text-danger">' + data.error['firstRegistration'] + '</span>') : false;
+                    (data.error['gearBox']) ? $('#gearBox').after('<span class="text-danger">' + data.error['gearBox'] + '</span>') : false;
+                    (data.error['fuel']) ? $('#fuel').after('<span class="text-danger">' + data.error['fuel'] + '</span>') : false;
+                    (data.error['color']) ? $('#color').after('<span class="text-danger">' + data.error['color'] + '</span>') : false;
+                    (data.error['seat']) ? $('#seat').after('<span class="text-danger">' + data.error['seat'] + '</span>') : false;
+                    (data.error['doors']) ? $('#doors').after('<span class="text-danger">' + data.error['doors'] + '</span>') : false;
+                    (data.error['firstHand']) ? $('#firstHand').after('<span class="text-danger">' + data.error['firstHand'] + '</span>') : false;
+                    (data.error['rent']) ? $('#rent').after('<span class="text-danger">' + data.error['rent'] + '</span>') : false;
+                    (data.error['sell']) ? $('#sell').after('<span class="text-danger">' + data.error['sell'] + '</span>') : false;
+                    (data.error['smoker']) ? $('#smoker').after('<span class="text-danger">' + data.error['smoker'] + '</span>') : false;
+                    (data.error['price']) ? $('#price').after('<span class="text-danger">' + data.error['price'] + '</span>') : false;
                 }
             }
         })
     });
 
     //Bouton d'envoi
-    $('.submit').click(function (e) {
-        e.preventDefault();
-        let dataValue = 'immat=' + tabValue[0] + '&identifiedNumber=' + tabValue[1] +'&year=' + tabValue[2] +'&brand' + tabValue[3] +'&model=' + tabValue[4] +'&fiscalPower=' + tabValue[5] +'&power=' + tabValue[6] +'&mileage=' + tabValue[7] +'&firstRegistration=' + tabValue[8] +'&gearBox=' + tabValue[9] +'&fuel=' + tabValue[10] +'&color=' + tabValue[11] +'&seat=' + tabValue[12] +'&doors=' + tabValue[13] +'&firstHand=' + tabValue[14] +'&rent=' + tabValue[15] +'&sell=' + tabValue[16] +'&smoker=' + tabValue[17] + '&submit=true';
+    $('#send').click(function () {
+        let dataValue = 'immat=' + tabValue[0] + '&identifiedNumber=' + tabValue[1] + '&year=' + tabValue[2] + '&brand' + tabValue[3] + '&model=' + tabValue[4] + '&fiscalPower=' + tabValue[5] +
+                '&power=' + tabValue[6] + '&mileage=' + tabValue[7] + '&firstRegistration=' + tabValue[8] + '&gearBox=' + tabValue[9] + '&fuel=' + tabValue[10] + '&color=' + tabValue[11] + '&seat=' + tabValue[12] +
+                '&doors=' + tabValue[13] + '&firstHand=' + tabValue[14] + '&rent=' + tabValue[15] + '&sell=' + tabValue[16] + '&smoker=' + tabValue[17] + '&price=' + tabValue[18] + '&submit=true';
         $.ajax({
             method: 'POST',
             url: 'carsValidate.php',
             data: dataValue,
             datatype: 'json',
-            success: function(response) {
-                   console.log(JSON.parse(response));             
+            success: function (response) {
+                console.log(JSON.parse(response));
+                if (response) {
+                    $('#hiddenInput').val(response);
+                }
+                return false;
             }
         });
     });
-
+    //Téléchargement des images
+    $('#upload').on('click', function () {
+        var formData = new FormData();
+        var fileData = $('#fileUpload')[0].files[0];
+        formData.append('picture', fileData);        
+        $.ajax({
+            method: 'POST',
+            url: 'upload.php',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response){
+                if(response != 0){
+                    console.log(response);
+                } else {
+                    alert('erreur lors du téléchargement')
+                }
+            }
+        })
+    });
     //Bouton precedent
     $(".previous").click(function () {
         step--;

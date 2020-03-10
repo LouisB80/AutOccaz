@@ -2,8 +2,8 @@
 
 if (isset($_SESSION['user'])) {
     $cars = new Cars();
-    $userCarsList = $cars->getAllByUserId($_SESSION['id']);
-    require_once 'Views/user_cars.php';
+    $userCar = $cars->getOne($_GET['value']);
+    require_once 'Views/car_deal.php';
     require_once 'Views/includes/template.php';
 } else {
     echo 'Vous devez être connecté pour accéder à cette page !';

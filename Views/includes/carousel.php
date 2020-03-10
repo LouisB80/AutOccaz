@@ -14,12 +14,12 @@
             </div>
             <?php foreach ($popularCarsList as $popularCar): ?>
                 <div class="carousel-item">
-                    <img class="d-block shadowImg" src="<?= $popularCar['source'] ?>" alt="<?= $popularCar['pictureName'] ?>">
+                    <img class="d-block shadowImg" src="<?= $popularCar->source ?>" alt="<?= $popularCar->pictureName ?>">
                 </div>
-            <?php endforeach; ?>                
+            <?php endforeach; ?>            
             <a class="carousel-control-prev" href="#carouselAuto" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon text-danger" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
+                <span class="sr-only">Previous</span>                
             </a>
             <a class="carousel-control-next" href="#carouselAuto" role="button" data-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>

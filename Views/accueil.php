@@ -24,8 +24,8 @@ $jsFile = 'apiActu.js';
                     <h2 class="mb-3">Annonces publiées récemment</h2>
                     <?php foreach ($recentCarsList as $recentCars) : ?>
                         <article>
-                            <h3><?= $recentCars['brand'] . ' ' . $recentCars['model'] ?></h3>
-                            <p>Couleur : <?= $vrecentCars['color'] ?></p>
+                            <h3><?= $recentCars->brand . ' ' . $recentCars->model ?></h3>
+                            <p>Couleur : <?= $recentCars->color ?></p>
                         </article>
                     <?php endforeach; ?>                    
                 </article>

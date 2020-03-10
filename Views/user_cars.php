@@ -6,25 +6,30 @@ $jsFile = '';
 ?>
 <div id="user_cars" class="container-fluid text-center">
     <h2>Vos annonces</h2>
-    <table>
-        <thead>
-            <tr>
-                <th colspan="2">#</th>
-                <th colspan="2">Marque</th>
-                <th colspan="2">Modèle</th>
-                <th colspan="2">Prix</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>...</td>
-                <td>...</td>
-                <td>...</td>
-                <td>...</td>
-            </tr>
-        </tbody>
-    </table>
-
+    <div class="row justify-content-center">
+        <table class="w-75 table table-striped bg-dark text-light">
+            <thead>
+                <tr>
+                    <th scope="col">Immatriculation</th>
+                    <th scope="col">Marque</th>
+                    <th scope="col">Modèle</th>
+                    <th scope="col">Consulter</th>
+                    <th scope="col">Supprimer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($userCarsList as $car): ?>
+                    <tr>
+                        <td><?= $car->immat ?></td>
+                        <td><?= $car->brand ?></td>
+                        <td><?= $car->model ?></td>
+                        <td><a href="/car_deal/<?= $car->id ?>"><button class="btn btn-info">Voir</button></a></td>
+                        <td><a href=""><button class="btn btn-danger">Supprimer</button></a></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
 </div>
 <?php
 $content = ob_get_clean();

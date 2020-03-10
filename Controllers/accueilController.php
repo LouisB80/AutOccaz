@@ -1,6 +1,5 @@
 <?php
 
-require_once 'Models/Cars.php';
 $cars = new Cars();
 $recentCarsList = $cars->getRecents();
 $popularCarsList = $cars->getPopulars();

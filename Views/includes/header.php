@@ -6,10 +6,10 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css?family=Asap&display=swap" rel="stylesheet">
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-        <link rel="stylesheet" href="assets/css/header.css">
-        <link rel="stylesheet" href="assets/css/carousel.css">
-        <link rel="stylesheet" href="assets/css/footer.css">
-        <link rel="stylesheet" href="assets/css/<?= $cssFile ?>">
+        <link rel="stylesheet" href="/assets/css/header.css">
+        <link rel="stylesheet" href="/assets/css/carousel.css">
+        <link rel="stylesheet" href="/assets/css/footer.css">
+        <link rel="stylesheet" href="/assets/css/<?= $cssFile ?>">
         <title><?= $title ?></title>
     </head>
     <body>
@@ -82,10 +82,10 @@
                 <div id="mainListDiv" class="main_list">    
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navlinks sizeNav">
-                            <li><a class="navbar-brand" href="accueil">Aut'Occaz</a></li>
-                            <li><a class="navbar-brand" href="location">Louer un Véhicule</a></li>
-                            <li><a class="navbar-brand" href="achat">Acheter un véhicule</a></li>
-                            <li><a class="navbar-brand" href="vente">Vendre un véhicule</a></li>
+                            <li><a class="navbar-brand" href="/accueil">Aut'Occaz</a></li>
+                            <li><a class="navbar-brand" href="/location">Louer un Véhicule</a></li>
+                            <li><a class="navbar-brand" href="/achat">Acheter un véhicule</a></li>
+                            <li><a class="navbar-brand" href="/vente">Vendre un véhicule</a></li>
                             <?php if (isset($_SESSION['user'])) { ?>
                                 <li>
                                     <div class="dropdown navbar-brand">
@@ -93,8 +93,8 @@
                                             <i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i>
                                         </button>
                                         <div class="dropdown-menu bg-dark" aria-labelledby="dropdownMenu1">
-                                            <a class="dropdown-item" href="user_panel">Espace personnel</a>
-                                            <a class="dropdown-item" href="disconnect">Déconnexion</a>
+                                            <a class="dropdown-item" href="/user_panel">Espace personnel</a>
+                                            <a class="dropdown-item" href="/disconnect">Déconnexion</a>
                                         </div>
                                     </div>
 
