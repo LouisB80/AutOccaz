@@ -4,6 +4,12 @@ Options +FollowSymlinks
 # Activation du module de réécriture d'URL :
 RewriteEngine On
 
-RewriteRule ^adminer$ /adminer.php [L]
+RewriteCond %{REQUEST_URI} !.(?:css|js|jpe?g|png)$ [NC]
+RewriteRule ^adminer$ /adminer.php [QSA]
 
-RewriteRule ^([a-z0-9_]+)$ /index.php?action=$1 [L]
+
+RewriteCond %{REQUEST_URI} !.(?:css|js|jpe?g|png)$ [NC]
+RewriteRule ^([a-z0-9_]+)$ /index.php?action=$1 [QSA]
+
+RewriteCond %{REQUEST_URI} !.(?:css|js|jpe?g|png)$ [NC]
+RewriteRule ^([a-z0-9_]+)/([a-z0-9_]+)$ /index.php?action=$1&value=$2 [QSA]

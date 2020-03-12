@@ -8,7 +8,6 @@ $(document).ready(function () {
     //Select marque
     $('#brand').change(function () {
         clickedBrand = 'idBrand=' + $(this).val();
-        console.log(clickedBrand);
         $.ajax({
             method: 'POST',
             url: 'getModels.php',
@@ -113,7 +112,9 @@ $(document).ready(function () {
     $('#upload').on('click', function () {
         var formData = new FormData();
         var fileData = $('#fileUpload')[0].files[0];
-        formData.append('picture', fileData);        
+        formData.append('picture', fileData);
+        formData.append('carId', $('#hiddenInput').val());
+        console.log(formData);
         $.ajax({
             method: 'POST',
             url: 'upload.php',
@@ -124,7 +125,7 @@ $(document).ready(function () {
                 if(response != 0){
                     console.log(response);
                 } else {
-                    alert('erreur lors du téléchargement')
+                    alert('erreur lors du téléchargement');
                 }
             }
         })

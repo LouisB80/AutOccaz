@@ -1,0 +1,13 @@
+.deal {
+    font-size: 3vh;
+}
+hr {
+    height: 3px;
+    background-color: black;
+}
+span {
+    font-weight: bold;
+}
+.fa-heart:hover {
+   color: #A32E08; 
+}

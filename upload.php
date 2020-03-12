@@ -2,12 +2,13 @@
 
 /* Vérifier si le formulaire a été soumis */
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $idCar = $_POST['carId'];
     /* Taille max du fichier = 2Mo */
     $maxSize = 2 * 1024 * 1024;
     /* On récupère le fichier */
     $fileName = $_FILES['picture']['name'];
     $fileSize = $_FILES['picture']['size'];
-
+   
     /* Emplacement du fichier */
     $location = 'uploads/' . $fileName;
     $uploadOk = 1;
@@ -27,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     /* On renomme le fichier */
     $temp = explode(".", $_FILES['picture']['name']);
-    $newFileName = $location . '.' . end($temp);
+    $newFileName = 'uploads/car_'. $idCar . '.' . end($temp);
     /* Téléchargement du fichier */
     if (move_uploaded_file($_FILES['picture']['tmp_name'], $newFileName)) {
         echo $location;

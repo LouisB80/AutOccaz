@@ -184,7 +184,7 @@ class Cars extends DataBase {
 
     public function getOne($id_Cars) {
         $cars = [];
-        $req = 'SELECT immat, year, firstRegistration, mileage, color, seat, firstHand, fiscalPower, power, leasing, sell, smoker, model, brand, id_Doors, id_GearBox, id_Fuels, id_Users, price FROM `Cars` INNER JOIN `Models` ON `Cars`.id_Models = `Models`.id INNER JOIN `Brands` ON `Models`.id_Brands = `Brands`.id WHERE `Cars`.id = :id';
+        $req = 'SELECT Cars.id, immat, identifiedNumber, year, firstRegistration, mileage, color, GearBox.type, `Fuels`.type AS fuel, Doors.number, seat, firstHand, fiscalPower, power, leasing, sell, smoker, model, brand, id_Doors, id_GearBox, id_Fuels, id_Brands, id_Models, id_Users, price FROM `Cars` INNER JOIN `Models` ON `Cars`.id_Models = `Models`.id INNER JOIN `Brands` ON `Models`.id_Brands = `Brands`.id INNER JOIN `Doors` ON `Cars`.id_Doors = `Doors`.id INNER JOIN `GearBox` ON `Cars`.id_GearBox = `GearBox`.id INNER JOIN `Fuels` ON `Cars`.id_Fuels = `Fuels`.id WHERE `Cars`.id = :id';
         $sth = $this->db->prepare($req);
         $sth->bindValue(':id', $id_Cars, PDO::PARAM_INT);
         $sth->execute();
