@@ -1,11 +1,11 @@
 $(document).ready(function () {
-
     var current_fs, next_fs, previous_fs;
     var opacity;
     var clickedBrand = '';
     var step = 0;
-    var tabValue = [];
-    //Select marque
+    var tabValue = {};
+
+    //Select Model
     $('#brand').change(function () {
         clickedBrand = 'idBrand=' + $(this).val();
         $.ajax({
@@ -29,21 +29,19 @@ $(document).ready(function () {
         current_fs = $(this).parent();
         next_fs = $(this).parent().next();
         let dataValue = $(this).parent('fieldset').serialize() + '&step=' + step + '&subscribe=true';
-        console.log(dataValue);
         $.ajax({
             method: 'POST',
             url: 'carsValidate.php',
             data: dataValue,
             datatype: 'json',
             success: function (response) {
-                console.log(response);
                 var data = JSON.parse(response);
-                console.log(data);
                 if (data.error.length === 0) {
                     step++;
-                    $.map(data.validValue, function (value) {
-                        tabValue.push(value);
-                    })
+                    for (let[key, value] of Object.entries(data.validValue)) {
+                        tabValue[key] = value;
+                    }
+                    ;
                     console.log(tabValue);
                     //Add Class Active
                     $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
@@ -86,17 +84,19 @@ $(document).ready(function () {
                     (data.error['price']) ? $('#price').after('<span class="text-danger">' + data.error['price'] + '</span>') : false;
                 }
             }
-        })
-    });
 
+        });
+    });
     //Bouton d'envoi
-    $('#send').click(function () {
-        let dataValue = 'immat=' + tabValue[0] + '&identifiedNumber=' + tabValue[1] + '&year=' + tabValue[2] + '&brand' + tabValue[3] + '&model=' + tabValue[4] + '&fiscalPower=' + tabValue[5] +
-                '&power=' + tabValue[6] + '&mileage=' + tabValue[7] + '&firstRegistration=' + tabValue[8] + '&gearBox=' + tabValue[9] + '&fuel=' + tabValue[10] + '&color=' + tabValue[11] + '&seat=' + tabValue[12] +
-                '&doors=' + tabValue[13] + '&firstHand=' + tabValue[14] + '&rent=' + tabValue[15] + '&sell=' + tabValue[16] + '&smoker=' + tabValue[17] + '&price=' + tabValue[18] + '&submit=true';
+    $('.send').click(function () {
+//        let dataValue = JSON.stringify(tabValue);
+        var dataValue = '';
+        for (let[key, value] of Object.entries(tabValue)) {
+            dataValue += key + '=' + value + '&';
+        };
         $.ajax({
             method: 'POST',
-            url: 'carsValidate.php',
+            url: 'createCar.php',
             data: dataValue,
             datatype: 'json',
             success: function (response) {
@@ -114,21 +114,16 @@ $(document).ready(function () {
         var fileData = $('#fileUpload')[0].files[0];
         formData.append('picture', fileData);
         formData.append('carId', $('#hiddenInput').val());
-        console.log(formData);
         $.ajax({
             method: 'POST',
             url: 'upload.php',
             data: formData,
             contentType: false,
             processData: false,
-            success: function(response){
-                if(response != 0){
-                    console.log(response);
-                } else {
-                    alert('erreur lors du téléchargement');
-                }
+            success: function (response) {
+                console.log(response);
             }
-        })
+        });
     });
     //Bouton precedent
     $(".previous").click(function () {

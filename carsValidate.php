@@ -8,7 +8,6 @@ require_once 'Models/GearBox.php';
 require_once 'Models/Models.php';
 require_once 'Models/Pictures.php';
 require_once 'Models/Users.php';
-session_start();
 
 //regex
 $regexImmat = '/^([A-Z|a-z]{2}|[0-9]{2,4})+(\-|)+([0-9]{3}|[A-Z|a-z]{2,3})+(\-|)+([A-Z|a-z]{2}|[0-9]{2}|2[A-B|a-b])$/';
@@ -58,7 +57,11 @@ if (isset($_POST['subscribe'])) {
             $errors['model'] = 'Ce champ est incorrect';
         }
         if (count($errors) === 0) {
-            array_push($var, $immat, $identifiedNumber, $year, $brands, $models);
+            $var['immat'] = $immat;
+            $var['identifiedNumber'] = $identifiedNumber;
+            $var['year'] = $year;
+            $var['brand'] = $brands;
+            $var['models'] = $models;
         }
         $tab = array('error' => $errors, 'validValue' => $var);
         exit(json_encode($tab));
@@ -107,7 +110,12 @@ if (isset($_POST['subscribe'])) {
             $errors['fuel'] = 'Ce champ est incorrect';
         }
         if (count($errors) === 0) {
-            array_push($var, $fiscalPower, $power, $mileage, $firstRegistration, $gearBox, $fuels);
+            $var['fiscalPower'] = $fiscalPower;
+            $var['power'] = $power;
+            $var['mileage'] = $mileage;
+            $var['firstRegistration'] = $firstRegistration;
+            $var['gearBox'] = $gearBox;
+            $var['fuels'] = $fuels;
         }
         $tab = array('error' => $errors, 'validValue' => $var);
         exit(json_encode($tab));
@@ -133,7 +141,9 @@ if (isset($_POST['subscribe'])) {
             $errors['doors'] = 'Ce champ est incorrect';
         }
         if (count($errors) === 0) {
-            array_push($var, $color, $seat, $doors);
+            $var['color'] = $color;
+            $var['seat'] = $seat;
+            $var['doors'] = $doors;
         }
         $tab = array('error' => $errors, 'validValue' => $var);
         exit(json_encode($tab));
@@ -167,13 +177,13 @@ if (isset($_POST['subscribe'])) {
             $errors['price'] = 'Ce champ est incorrect, merci de renseigner un prix';
         }
         if (count($errors) === 0) {
-            array_push($var, $firstHand, $leasing, $sell, $smoker);
+            $var['firstHand'] = $firstHand;
+            $var['leasing'] = $leasing;
+            $var['sell'] = $sell;
+            $var['smoker'] = $smoker;
+            $var['price'] = $price;
         }
         $tab = array('error' => $errors, 'validValue' => $var);
         exit(json_encode($tab));
     }
-} elseif (isset($_POST['submit'])) {
-    $car = new Cars($_POST['immat'], $_POST['identifiedNumber'], $_POST['year'], $_POST['firstRegistration'], $_POST['mileage'], $_POST['color'], $_POST['seat'], $_POST['firstHand'], $_POST['fiscalPower'], $_POST['power'], $_POST['rent'], $_POST['sell'], $_POST['smoker'], $_POST['model'], $_POST['doors'], $_POST['gearBox'], $_POST['fuel'], $_SESSION['id'], $_POST['price']);
-    $response = $car->create();
-    echo json_encode($response);
 }

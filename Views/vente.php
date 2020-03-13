@@ -131,7 +131,15 @@ $jsFile = 'vente.js';
                                         <input type="text" name="price" id="price" placeholder="Entrer un prix">
                                     </div>
                                     <input type="button" name="previous" class="previous action-button-previous" value="Precedent" />
-                                    <input type="button" name="next" class="next action-button" id="send" value="Suivant" />
+                                    <input type="button" name="next" class="next action-button" value="Suivant" />
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-card">
+                                        <h2 class="fs-title text-center" id="viewInfo">Votre annonce va étre créé.</h2>
+                                        <p>Souhaitez-vous ajouter des photos ?</p>
+                                    </div>
+                                    <input type="submit" name="submit" class="previous action-button-previous send" value="Non" />
+                                    <input type="button" name="next" class="next action-button send" value="Oui" />
                                 </fieldset>
                                 <fieldset>
                                     <div class="form-card">

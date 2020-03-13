@@ -114,7 +114,7 @@ class Cars extends DataBase {
      */
     private $FK_idUsers;
 
-    public function __construct($immat = '', $identifiedNumber = '', $year = '', $firstRegistration = '', $mileage = '', $color = '', $seat = '', $firstHand = '', $fiscalPower = '', $power = '', $leasing = false, $sell = true, $smoker = false, $id_Models = '', $id_Doors = '', $id_GearBox = '', $id_Fuels = '', $id_Users = '', $price = '', $view = '') {
+    public function __construct($immat = '', $identifiedNumber = '', $year = '', $firstRegistration = '', $mileage = '', $color = '', $seat = '', $firstHand = false, $fiscalPower = '', $power = '', $leasing = false, $sell = true, $smoker = false, $id_Models = '', $id_Doors = '', $id_GearBox = '', $id_Fuels = '', $id_Users = '', $price = '', $view = '') {
         parent::__construct();
         $this->immat = $immat;
         $this->identifiedNumber = $identifiedNumber;
