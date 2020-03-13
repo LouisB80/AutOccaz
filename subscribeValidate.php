@@ -3,7 +3,7 @@
 require_once 'Models/Users.php';
 //regex pour les contrôle du formulaire
 $regexName = "/^[A-Za-zéÉ][A-Za-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ]+((-| )[A-Za-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ]+)?$/";
-$regexPass = '/^(?=.[\d])(?=.[A-Z])(?=.[a-z])(?=.[!@#$%^&])?[\w!@#$%^&]{4,}$/';
+$regexPass = '/^([0-9a-zA-Z\.,!?@_-]{4,})$/';
 $regexTel = "/^0[2367]([0-9]{2}){4}$/";
 //contrôle du formulaire d'inscription après envoi
 if (isset($_POST['subscribe'])) {
@@ -33,16 +33,18 @@ if (isset($_POST['subscribe'])) {
         $errors['mail'] = 'L\'email n\'est pas valide!';
     }
 //contrôle du mot de passe
-    if (empty($_POST['passInscription']) || !preg_match($regexPass, $_POST['passInscription'])) {
+    $password = trim($_POST['passInscription']);
+    $passwordValidate = trim($_POST['passValidation']);
+    if (empty($password) || !preg_match($regexPass, $password)) {
         $errors['password'] = 'Le mot de passe doit comporter au moins 4 caractères !';
     }
-    if (empty($_POST['passValidation']) || !preg_match($regexPass, $_POST['passValidation'])) {
+    if (empty($passwordValidate) || !preg_match($regexPass, $passwordValidate)) {
         $errors['passwordIns'] = 'Veuillez renseigner la confirmation du mot de passe';
     }
-    if ($_POST['passInscription'] != $_POST['passValidation']) {
+    if ($password != $passwordValidate) {
         $errors['passwordIns'] = 'Le mot de passe n\'est pas identique à la confirmation';
     } else {
-        $password = trim(password_hash($_POST['passInscription'], PASSWORD_BCRYPT));
+        $password = trim(password_hash($password, PASSWORD_BCRYPT));
     }
 //contrôle du téléphone
     $phoneNumber = trim(htmlspecialchars($_POST['phoneNumber']));
@@ -55,10 +57,10 @@ if (isset($_POST['subscribe'])) {
     if (count($errors) === 0) {
         $user = new User($lastName, $firstName, $password, $mail, $phoneNumber);
         $user->create();
-        $user->getOneByMail($mail);
+        $newUser = $user->getOneByMail($mail);
         session_start();
         $_SESSION['user'] = $mail;
-        $_SESSION['id'] = $user->id;
+        $_SESSION['id'] = $newUser->id;
     }
     exit(json_encode($errors));
 }

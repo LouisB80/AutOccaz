@@ -11,7 +11,7 @@ $(function () {
                 var data = JSON.parse(response);
                 console.log(data);
                 if ($.isEmptyObject(data)) {
-                    location.assign('http://autocazz.fr/accueil');
+                    location.assign('/accueil');
                 } else {
                     $('span').empty();
                     (data['userConnection']) ? $('#userConnection').after('<span class="text-danger">' + data['userConnection'] + '</span>') : false;
@@ -23,17 +23,16 @@ $(function () {
     });
     $('.sign-up-htm').submit(function (event) {
         event.preventDefault();
-        let subcribeValue = $(this).serialize() + '&subscribe=true';
+        let subscribeValue = $(this).serialize() + '&subscribe=true';
         $.ajax({
             method: 'POST',
             url: 'subscribeValidate.php',
-            data: subcribeValue,
+            data: subscribeValue,
             datatype: 'json',
             success: function (response) {
                 var data = JSON.parse(response);
-                console.log(data);
                 if ($.isEmptyObject(data)) {
-                    location.assign('http://autocazz.fr/accueil');
+                    location.assign('/accueil');
                 } else {
                     $('span').empty();
                     (data['lastName']) ? $('#lastNameInscription').after('<span class="text-danger">' + data['lastName'] + '</span>') : false;
