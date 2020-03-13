@@ -89,23 +89,44 @@ $(document).ready(function () {
     });
     //Bouton d'envoi
     $('.send').click(function () {
-//        let dataValue = JSON.stringify(tabValue);
         var dataValue = '';
         for (let[key, value] of Object.entries(tabValue)) {
             dataValue += key + '=' + value + '&';
-        };
+        }
+        ;
         $.ajax({
             method: 'POST',
             url: 'createCar.php',
             data: dataValue,
             datatype: 'json',
             success: function (response) {
-                console.log(JSON.parse(response));
                 if (response) {
-                    $('#hiddenInput').val(response);
+                    idCar = JSON.parse(response);
                 }
                 return false;
             }
+        });
+    });
+    $('.updatePictures').click(function (e) {
+        e.preventDefault();
+        current_fs = $(this).parent();
+        next_fs = $(this).parent().next();
+        //Add Class Active
+        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+        //show the next fieldset
+        next_fs.show();
+        //hide the current fieldset with style
+        current_fs.animate({opacity: 0}, {
+            step: function (now) {
+                // for making fielset appear animation
+                opacity = 1 - now;
+                current_fs.css({
+                    'display': 'none',
+                    'position': 'relative'
+                });
+                next_fs.css({'opacity': opacity});
+            },
+            duration: 600
         });
     });
     //Téléchargement des images
@@ -113,7 +134,7 @@ $(document).ready(function () {
         var formData = new FormData();
         var fileData = $('#fileUpload')[0].files[0];
         formData.append('picture', fileData);
-        formData.append('carId', $('#hiddenInput').val());
+        formData.append('carId', idCar);
         $.ajax({
             method: 'POST',
             url: 'upload.php',

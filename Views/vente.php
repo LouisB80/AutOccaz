@@ -139,7 +139,7 @@ $jsFile = 'vente.js';
                                         <p>Souhaitez-vous ajouter des photos ?</p>
                                     </div>
                                     <input type="submit" name="submit" class="previous action-button-previous send" value="Non" />
-                                    <input type="button" name="next" class="next action-button send" value="Oui" />
+                                    <input type="button" name="next" class="updatePictures action-button send" value="Oui" />
                                 </fieldset>
                                 <fieldset>
                                     <div class="form-card">
