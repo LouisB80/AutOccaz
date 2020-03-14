@@ -5,6 +5,9 @@
  *
  * @author lb
  */
+
+require_once 'Config/DataBase.php';
+    
 class Pictures extends DataBase {
 
     /**
@@ -37,7 +40,7 @@ class Pictures extends DataBase {
     public function create() {
         $req = 'INSERT INTO `Pictures`(pictureName, source, id_Cars) VALUES(:pictureName, :source, :id_Cars)';
         $sth = $this->db->prepare($req);
-        $sth->bindValue(':pictureName', $this->model, PDO::PARAM_STR);
+        $sth->bindValue(':pictureName', $this->pictureName, PDO::PARAM_STR);
         $sth->bindValue(':source', $this->source, PDO::PARAM_STR);
         $sth->bindValue(':id_Cars', $this->FK_idCars, PDO::PARAM_INT);
         if ($sth->execute()) {

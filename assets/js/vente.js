@@ -14,7 +14,6 @@ $(document).ready(function () {
             data: clickedBrand,
             success: function (response) {
                 var datas = JSON.parse(response);
-                console.log(datas);
                 $('#model').empty()
                 $.each(datas, function (key, data) {
                     $('#model').append('<option value="' + data['id'] + '">' + data['model'] + '</option>')
@@ -42,7 +41,6 @@ $(document).ready(function () {
                         tabValue[key] = value;
                     }
                     ;
-                    console.log(tabValue);
                     //Add Class Active
                     $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
                     //show the next fieldset
@@ -139,10 +137,11 @@ $(document).ready(function () {
             method: 'POST',
             url: 'upload.php',
             data: formData,
+            datatype: 'json',
             contentType: false,
             processData: false,
             success: function (response) {
-                console.log(response);
+                $('#fileUpload').after('<span class="text-danger">' + response + '</span>');
             }
         });
     });

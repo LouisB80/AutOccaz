@@ -104,7 +104,7 @@ $jsFile = 'vente.js';
                                             <legend id="">Première main</legend>
                                             <input type="radio" id="firstHandYes" name="firstHand" value="1">
                                             <label for="firstHandYes">Oui</label>
-                                            <input type="radio" id="firstHandNo" name="firstHand" value="0">
+                                            <input type="radio" id="firstHandNo" name="firstHand" checked value="0">
                                             <label for="firstHandNo">Non</label>
                                         </div>
                                         <div>
@@ -148,7 +148,7 @@ $jsFile = 'vente.js';
                                         <input type="hidden" id="hiddenInput">
                                         <input type="file" name="picture" id="fileUpload">
                                     </div>
-                                    <input type="button" name="upload" class="btn btn-success" id="upload" value="Ajoute une photo" />
+                                    <input type="button" name="upload" class="btn action-button-pic" id="upload" value="Ajouter" />
                                     <input type="submit" name="submit" class="btn action-button submit" value="Terminer" />
                                 </fieldset>
                             </form>

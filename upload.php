@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Models/Pictures.php';
 /* Vérifier si le formulaire a été soumis */
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $idCar = $_POST['carId'];
@@ -8,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     /* On récupère le fichier */
     $fileName = $_FILES['picture']['name'];
     $fileSize = $_FILES['picture']['size'];
-   
+
     /* Emplacement du fichier */
     $location = 'uploads/' . $fileName;
     $uploadOk = 1;
@@ -21,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $uploadOk = 0;
         die('Erreur: Veuillez insérer une image.');
     }
+
     /* Vérifie la taille du fichier */
     if ($fileSize > $maxSize) {
         $uploadOk = 0;
@@ -28,10 +30,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     /* On renomme le fichier */
     $temp = explode(".", $_FILES['picture']['name']);
-    $newFileName = 'uploads/car_'. $idCar . '.' . end($temp);
+    $newFileName = 'car_' . $idCar . '.' . end($temp);
+    $upload = 'uploads/' . $newFileName;
     /* Téléchargement du fichier */
-    if (move_uploaded_file($_FILES['picture']['tmp_name'], $newFileName)) {
-        echo $location;
+    if (move_uploaded_file($_FILES['picture']['tmp_name'], $upload)) {
+        $newPic = new Pictures($newFileName, $upload, $idCar);
+        if ($newPic->create()) {
+            die('L\'image a été ajoutée avec succès');
+        } else {
+            die('Erreur de liaison avec la base de donnée, contactez votre administrateur');
+        }
     } else {
         die('Erreur lors du téléchargement');
     }

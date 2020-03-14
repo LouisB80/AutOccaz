@@ -81,6 +81,18 @@
     padding: 10px 5px;
     margin: 10px 5px
 }
+#msform .action-button-pic {
+    width: 100px;
+    background: green;
+    font-weight: bold;
+    color: white;
+    border: 0 none;
+    border-radius: 0px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 10px 5px;
+    font-size: 100%;
+}
 
 #msform .action-button:hover,
 #msform .action-button:focus {
